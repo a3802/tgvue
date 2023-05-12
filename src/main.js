@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import './assets/base.css';
-import 'amfe-flexible';
+// import 'amfe-flexible';
+import './libs/rem.js';
 import router from './router/index';
 const app = createApp(App)
 app.use(router)

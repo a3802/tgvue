@@ -1,5 +1,5 @@
 module.exports = {
-
+    lintOnSave: false,
     css: {
 
         loaderOptions: {
@@ -8,7 +8,7 @@ module.exports = {
 
                 plugins: [
 
-                    require('postcss-pxtorem')({ rootValue: 75, propList: ['*'] }),
+                    require('postcss-pxtorem')({ rootValue: 100, propList: ['*'] }),
 
                 ],
 
