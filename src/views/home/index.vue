@@ -9,15 +9,16 @@
                             style="color: #fd2525; font-size: 0.54rem; font-weight: bolder; text-align: center;">
                             享受百元话费优惠券包！
                         </p>
-                        <van-count-down millisecond :time="time" format="HH:mm:ss:SS" />
-                        <p class="lock_message2">支付剩余时间 <span class="timeout_minutes timeout"
-                                style="border-radius: 2px; display: inline-block; font-weight: 500; background: linear-gradient(0deg, rgb(253, 242, 183) 0%, rgb(255, 255, 255) 100%);">05</span>
-                            :
-                            <span class="timeout_second timeout"
-                                style="border-radius: 2px; display: inline-block; font-weight: 500; background: linear-gradient(0deg, rgb(253, 242, 183) 0%, rgb(255, 255, 255) 100%);">38</span>
-                            : <span class="timeout_second timeout"
-                                style="border-radius: 2px; display: inline-block; font-weight: 500; background: linear-gradient(0deg, rgb(253, 242, 183) 0%, rgb(255, 255, 255) 100%);">03</span>
-                        </p>
+                        <van-count-down millisecond :time="time" format="mm:ss:SS" class="lock_message2">
+                            <template v-slot="timeData">
+                                支付剩余时间
+                                <span class="timeout_second timeout block">{{ timeData.minutes }}</span>
+                                <span class="colon"> : </span>
+                                <span class="timeout_second timeout block">{{ timeData.seconds }}</span>
+                                <span class="colon"> : </span>
+                                <span class="timeout_second timeout block">{{ timeData.milliseconds }}</span>
+                            </template>
+                        </van-count-down>
                     </div>
                 </div>
             </div>
@@ -94,4 +95,23 @@
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            time: 15 * 60 * 1000
+        };
+    }
+
+}
+</script>
+<style>
+.block {
+    border-radius: 2px;
+    display: inline-block;
+    font-weight: 500;
+    background: linear-gradient(0deg, rgb(253, 242, 183) 0%, rgb(255, 255, 255) 100%);
+}
+</style>
 
