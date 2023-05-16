@@ -10,13 +10,13 @@
                             享受百元话费优惠券包！
                         </p>
                         <van-count-down millisecond :time="time" format="mm:ss:SS" class="lock_message2">
-                            <template v-slot="timeData">
+                            <template v-slot="">
                                 支付剩余时间
-                                <span class="timeout_second timeout block">{{ timeData.minutes }}</span>
+                                <span class="timeout_second timeout block">{{ current.minutes }}</span>
                                 <span class="colon"> : </span>
-                                <span class="timeout_second timeout block">{{ timeData.seconds }}</span>
+                                <span class="timeout_second timeout block">{{ current.seconds }}</span>
                                 <span class="colon"> : </span>
-                                <span class="timeout_second timeout block">{{ timeData.milliseconds }}</span>
+                                <span class="timeout_second timeout block">{{ current.milliseconds }}</span>
                             </template>
                         </van-count-down>
                     </div>
@@ -75,9 +75,14 @@
                 </div>
                 <!---->
             </div>
-            <div class="rightInfo"><a href="/cqy6/qy_refund?cid=0">极速退款</a><a
-                    href="http://okc2q.fujianyuanaic.cn/page/rule29.html">规则</a><a
-                    href="https://kefu.xianshangzixun.com/web/im?cptid=d4645200bee7">客服</a></div>
+            <div class="rightInfo">
+                <a href="/cqy6/qy_refund?cid=0">极速退款</a>
+                <router-link to="/rule" class="nav-item" active-class="nav-color">
+                    <van-icon name="coupon-o" size="30" />
+                    规则
+                </router-link>
+                <a href="https://kefu.xianshangzixun.com/web/im?cptid=d4645200bee7">客服</a>
+            </div>
             <div class="model2">
                 <div class="model2-title">话费优惠券券包说明</div>
                 <div class="tips">
@@ -97,12 +102,28 @@
 </template>
 
 <script>
+import { useCountDown } from '@vant/use';
 export default {
-    data() {
+    setup() {
+        const countDown = useCountDown({
+            time: 15 * 60 * 1000,
+            millisecond: true,
+        });
+        countDown.start();
+
+        const inputChange = (value, detail) => {
+            store.state.cartList.map((item) => {
+                if (item.id === detail.name) {
+                    item.num = value;
+                }
+            })
+        }
+
         return {
-            time: 15 * 60 * 1000
+            current: countDown.current,
+            inputChange
         };
-    }
+    },
 
 }
 </script>
@@ -112,6 +133,12 @@ export default {
     display: inline-block;
     font-weight: 500;
     background: linear-gradient(0deg, rgb(253, 242, 183) 0%, rgb(255, 255, 255) 100%);
+}
+
+.nav-item {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
 }
 </style>
 
