@@ -1,3 +1,11 @@
+<!--
+ * @Author: a3802 253092329@qq.com
+ * @Date: 2023-07-24 20:06:37
+ * @LastEditors: a3802 253092329@qq.com
+ * @LastEditTime: 2023-07-25 06:29:35
+ * @FilePath: \tgvue\src\views\home\index.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
     <div id="toTop" class="saveMoney_pay">
         <div class="blind_box_pay_header" style="justify-content: center; align-items: flex-start;">
@@ -69,7 +77,7 @@
                     </div>
                 </div>
                 <!---->
-                <div class="pay_phone_number_button"> 立即充值
+                <div class="pay_phone_number_button" @click="handleBuy()"> 立即充值
                     <div class="pay_phone_number_tips">节省70.1元</div>
                 </div>
                 <!---->
@@ -102,7 +110,24 @@
 <script>
 import { reactive, toRefs } from 'vue';
 import { useCountDown } from '@vant/use';
+import { showToast } from 'vant';
+import * as Verify from '@/api/verify';
+import * as Index from '@/api/index'
+// 表单字段元素
+const form = {
+    phone: '',
+}
+
 export default {
+
+
+    data() {
+        return {
+            // 手机号
+            phone: '',
+        }
+    },
+
     setup() {
         const countDown = useCountDown({
             time: 15 * 60 * 1000,
@@ -123,6 +148,64 @@ export default {
             onSubmit,
         };
     },
+
+    methods: {
+
+        handleBuy() {
+            const app = this
+            if (app.validteData(app.phone)) {
+                app.submitBuy()
+            }
+        },
+        // 验证手机号
+        validteData(str) {
+
+            if (Verify.isEmpty(str)) {
+                showToast('请先输入手机号')
+                return false
+            }
+            if (!Verify.isMobile(str)) {
+                showToast('请输入正确格式的手机号')
+                return false
+            }
+            return true
+        },
+
+        //提交数据
+        submitBuy() {
+            const app = this
+            app.categoryId == 10072 //话费订单
+            if (app.categoryId == 10072) {
+
+                app.mode = 'Coupon'; //话费充值
+                form.couponId = 0;
+                form.coupon_money = 0;
+
+            }
+            form.productId = 310072;
+            form.phone = app.phone;
+            form.payType = 'WECHAT'
+            Index.register(app.mode, app.form).
+                then(result => app.onSubmitCallback(result))
+                .catch(err => {
+                    if (err.result) {
+                        const errData = err.result.data
+                        if (errData.is_created) {
+                            // app.navToMyOrder()
+                            return false
+                        }
+                    }
+                    app.disabled = false
+                })
+        },
+
+
+        onSubmitCallback(result) {
+            console.log(result);
+        }
+
+
+    }
 
 }
 </script>

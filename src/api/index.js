@@ -9,4 +9,12 @@ export const alldata = (data) => {
     })
 }
 
-export default { alldata }
+export const register = (data) => {
+    return axios({
+        url: '/equity/qylogin',
+        method: 'post',
+        data
+    })
+}
+
+export default { alldata, register }
