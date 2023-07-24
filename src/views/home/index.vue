@@ -9,7 +9,7 @@
                         享受百元话费优惠券包！
                     </p>
                     <van-count-down millisecond :time="time" format="mm:ss:SS" class="lock_message2">
-                        <template v-slot="">
+                        <template v-slot="timeData">
                             支付剩余时间
                             <span class="timeout_second timeout block">{{ current.minutes }}</span>
                             <span class="colon"> : </span>
@@ -25,7 +25,8 @@
             <van-form @submit="onSubmit">
                 <van-cell-group>
                     <van-field v-model="mobile" type="number" name="telphone" placeholder="请输入手机号"
-                        :rules="[{ validator, message: '请输入正确手机号' }]" class="pay_phone_number" />
+                        :rules="[{ pattern: /^1[3456789]\d{9}$/, message: '请输入正确手机号' }, { required: true, message: '请填写您的手机号码！' }]"
+                        class="pay_phone_number" />
                     <van-image width="0.34rem" height="0.38rem" :src="require('../../assets/contact.png')"
                         class="change_phone_number" />
                 </van-cell-group>
