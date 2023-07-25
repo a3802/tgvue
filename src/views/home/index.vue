@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2023-07-24 20:06:37
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2023-07-25 06:29:35
+ * @LastEditTime: 2023-07-25 22:40:08
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -76,11 +76,13 @@
                     </div>
                 </div>
                 <!---->
-                <van-button native-type="submit" class="pay_phone_number_button">
-                    <div class="pay_phone_number_button"> 立即充值
-                        <div class="pay_phone_number_tips">节省70.1元</div>
-                    </div>
-                </van-button>
+
+                <div class="pay_phone_number_button">
+                    <van-button round block native-type="submit" class="pay_button" style="">
+                        立即充值
+                    </van-button>
+                    <div class="pay_phone_number_tips">节省70.1元</div>
+                </div>
                 <!---->
             </van-form>
         </div>
@@ -128,22 +130,21 @@ export default {
 
         const form = reactive({
             phone: '',
-            couponId: 0,
-            coupon_money: 0,
-            productId: 310072,
-            payType: 'WECHAT',
-            categoryId: 10072
+            isParty: false,
+            partyData: {}
+            // couponId: 0,
+            // coupon_money: 0,
+            // productId: 310072,
+            // payType: 'WECHAT',
+            // categoryId: 10072
         });
-        const telphone = ref('');
-        const mode = ref('Coupon');
 
+        // const mode = ref('Coupon');
+        const mobile = ref('');
 
         const onSubmit = (value) => {
             console.log(value);
             if (validteData(value.telphone)) {
-                console.log(1);
-                this.mode = 2222;
-                console.log(mode);
                 submitBuy(value.telphone)
             }
         };
@@ -165,7 +166,7 @@ export default {
         const submitBuy = (str) => {
             form.phone = str;
             console.log(form);
-            Index.register(mode, form).
+            Index.register(form).
                 then(result => onSubmitCallback(result))
                 .catch(err => {
                     if (err.result) {
@@ -181,7 +182,7 @@ export default {
 
         const onSubmitCallback = (result) => {
             console.log(result);
-        }
+        };
 
         return {
             ...toRefs(form),
@@ -190,8 +191,8 @@ export default {
             validteData,
             submitBuy,
             onSubmitCallback,
-            telphone,
-            mode
+            mobile
+            // mode
         };
     },
 
