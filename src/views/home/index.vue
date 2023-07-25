@@ -33,7 +33,6 @@
             <van-form @submit="onSubmit">
                 <van-cell-group>
                     <van-field v-model="mobile" type="number" name="telphone" placeholder="请输入手机号"
-                        :rules="[{ pattern: /^1[3456789]\d{9}$/, message: '请输入正确手机号' }, { required: true, message: '请填写您的手机号码！' }]"
                         class="pay_phone_number" />
                     <van-image width="0.34rem" height="0.38rem" :src="require('../../assets/contact.png')"
                         class="change_phone_number" />
@@ -77,9 +76,11 @@
                     </div>
                 </div>
                 <!---->
-                <div class="pay_phone_number_button" @click="handleBuy()"> 立即充值
-                    <div class="pay_phone_number_tips">节省70.1元</div>
-                </div>
+                <van-button native-type="submit" class="pay_phone_number_button">
+                    <div class="pay_phone_number_button"> 立即充值
+                        <div class="pay_phone_number_tips">节省70.1元</div>
+                    </div>
+                </van-button>
                 <!---->
             </van-form>
         </div>
@@ -108,85 +109,64 @@
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue';
+import { reactive, toRefs, ref } from 'vue';
 import { useCountDown } from '@vant/use';
-import { showToast } from 'vant';
-import * as Verify from '@/api/verify';
-import * as Index from '@/api/index'
+import { Toast } from 'vant';
+import * as Verify from '../../api/verify';
+import * as Index from '../../api/index'
 // 表单字段元素
-const form = {
-    phone: '',
-}
-
 export default {
 
-
-    data() {
-        return {
-            // 手机号
-            phone: '',
-        }
-    },
-
     setup() {
+
         const countDown = useCountDown({
             time: 15 * 60 * 1000,
             millisecond: true,
         });
         countDown.start();
 
-        const data = reactive({
-            mobile: '',
-        })
-        const onSubmit = (values) => {
-            console.log('submit', values);
-        }
 
-        return {
-            ...toRefs(data),
-            current: countDown.current,
-            onSubmit,
-        };
-    },
+        const form = reactive({
+            phone: '',
+            couponId: 0,
+            coupon_money: 0,
+            productId: 310072,
+            payType: 'WECHAT',
+            categoryId: 10072
+        });
+        const telphone = ref('');
+        const mode = ref('Coupon');
 
-    methods: {
 
-        handleBuy() {
-            const app = this
-            if (app.validteData(app.phone)) {
-                app.submitBuy()
+        const onSubmit = (value) => {
+            console.log(value);
+            if (validteData(value.telphone)) {
+                console.log(1);
+                this.mode = 2222;
+                console.log(mode);
+                submitBuy(value.telphone)
             }
-        },
-        // 验证手机号
-        validteData(str) {
+        };
 
+        // 验证手机号
+        const validteData = (str) => {
             if (Verify.isEmpty(str)) {
-                showToast('请先输入手机号')
+                Toast('请输入手机号');
                 return false
             }
             if (!Verify.isMobile(str)) {
-                showToast('请输入正确格式的手机号')
+                Toast('请输入正确格式的手机号')
                 return false
             }
             return true
-        },
+        };
 
         //提交数据
-        submitBuy() {
-            const app = this
-            app.categoryId == 10072 //话费订单
-            if (app.categoryId == 10072) {
-
-                app.mode = 'Coupon'; //话费充值
-                form.couponId = 0;
-                form.coupon_money = 0;
-
-            }
-            form.productId = 310072;
-            form.phone = app.phone;
-            form.payType = 'WECHAT'
-            Index.register(app.mode, app.form).
-                then(result => app.onSubmitCallback(result))
+        const submitBuy = (str) => {
+            form.phone = str;
+            console.log(form);
+            Index.register(mode, form).
+                then(result => onSubmitCallback(result))
                 .catch(err => {
                     if (err.result) {
                         const errData = err.result.data
@@ -197,19 +177,34 @@ export default {
                     }
                     app.disabled = false
                 })
-        },
+        };
 
-
-        onSubmitCallback(result) {
+        const onSubmitCallback = (result) => {
             console.log(result);
         }
 
+        return {
+            ...toRefs(form),
+            current: countDown.current,
+            onSubmit,
+            validteData,
+            submitBuy,
+            onSubmitCallback,
+            telphone,
+            mode
+        };
+    },
 
-    }
 
 }
 </script>
 <style lang="less" scoped>
+.noticeError {
+    font-size: 28px !important;
+    transform: scale(2) !important;
+    margin-left: -.6rem !important
+}
+
 /deep/ .van-hairline--top-bottom:after {
     border-width: 0;
 }
@@ -225,6 +220,10 @@ export default {
     display: flex;
     flex-flow: column;
     align-items: center;
+}
+
+/deep/ .van-button__text {
+    width: 90%;
 }
 
 /deep/ .van-field__control::-webkit-input-placeholder {
