@@ -1,15 +1,23 @@
+/*
+ * @Author: a3802 253092329@qq.com
+ * @Date: 2023-07-26 20:40:06
+ * @LastEditors: a3802 253092329@qq.com
+ * @LastEditTime: 2023-07-30 18:06:46
+ * @FilePath: \tgvue\src\api\request.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import axios from 'axios'
 
 // 创建一个 axios 实例
 const service = axios.create({
-    baseURL: '/api', // 所有的请求地址前缀部分
+    baseURL: 'http://tgqy.yueyueyouqian.cn/api', // 所有的请求地址前缀部分
     timeout: 60000, // 请求超时时间毫秒
-    withCredentials: true, // 异步请求携带cookie
+    withCredentials: false, // 异步请求携带cookie
     headers: {
         // 设置后端需要的传参类型
         'Content-Type': 'application/json;charset=utf-8',
-        'Access-Control-Allow-Origin': '*',
         'Accept': 'application/json',
+        'Platform': 'H5'
     },
 })
 

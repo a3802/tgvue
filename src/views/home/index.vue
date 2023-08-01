@@ -1,8 +1,16 @@
 <!--
  * @Author: a3802 253092329@qq.com
+ * @Date: 2023-07-25 21:05:10
+ * @LastEditors: a3802 253092329@qq.com
+ * @LastEditTime: 2023-08-02 02:51:20
+ * @FilePath: \tgvue\src\views\home\index.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!--
+ * @Author: a3802 253092329@qq.com
  * @Date: 2023-07-24 20:06:37
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2023-07-25 22:40:08
+ * @LastEditTime: 2023-07-30 18:09:48
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -111,11 +119,12 @@
 </template>
 
 <script>
-import { reactive, toRefs, ref } from 'vue';
+import { reactive, toRefs, ref, watch } from 'vue';
 import { useCountDown } from '@vant/use';
 import { Toast } from 'vant';
 import * as Verify from '../../api/verify';
-import * as Index from '../../api/index'
+import * as Index from '../../api/index';
+import { showConfirmDialog } from 'vant';
 // 表单字段元素
 export default {
 
@@ -129,19 +138,23 @@ export default {
 
 
         const form = reactive({
-            phone: '',
-            isParty: false,
-            partyData: {}
-            // couponId: 0,
-            // coupon_money: 0,
-            // productId: 310072,
-            // payType: 'WECHAT',
-            // categoryId: 10072
+            form: {
+                mobile: '',
+                isParty: false,
+                partyData: {},
+                productId: 310072,
+                payType: 20,
+                couponId: 0,
+                coupon_money: 0,
+                mode: 'Coupon'
+                // categoryId: 10072
+            }
+
         });
 
         // const mode = ref('Coupon');
         const mobile = ref('');
-
+        const isShow = ref(false);
         const onSubmit = (value) => {
             console.log(value);
             if (validteData(value.telphone)) {
@@ -164,11 +177,17 @@ export default {
 
         //提交数据
         const submitBuy = (str) => {
-            form.phone = str;
-            console.log(form);
+            form.form.mobile = str;
             Index.register(form).
-                then(result => onSubmitCallback(result))
-                .catch(err => {
+                then(result => {
+                    isShow.value = true;
+                    console.log(result);
+                    console.log(isShow.value);
+                    setInterval(() => {
+                        window.location.href = 'http://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);
+                    }, 1000);
+
+                }).catch(err => {
                     if (err.result) {
                         const errData = err.result.data
                         if (errData.is_created) {
@@ -176,13 +195,33 @@ export default {
                             return false
                         }
                     }
-                    app.disabled = false
+
                 })
         };
 
         const onSubmitCallback = (result) => {
             console.log(result);
+            isShow = true;
+            setInterval(() => {
+                window.location.href = 'http://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);
+            }, 1000);
+
         };
+
+        watch(() => isShow, () => {
+            if (isShow.value == true) {
+                showConfirmDialog({
+                    title: '标题',
+                    message: '如果解决方法是丑陋的，那就肯定还有更好的解决方法，只是还没有发现而已。',
+
+                }).then(() => {
+                    // on confirm
+                }).catch(() => {
+                    // on cancel
+                });
+
+            }
+        });
 
         return {
             ...toRefs(form),
@@ -191,7 +230,8 @@ export default {
             validteData,
             submitBuy,
             onSubmitCallback,
-            mobile
+            mobile,
+            isShow
             // mode
         };
     },

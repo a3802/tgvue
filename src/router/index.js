@@ -15,7 +15,7 @@ const router = createRouter({
             path: '/refund',
             component: () =>
                 import ('../views/fund'),
-        },
+        }
     ]
 })
 
