@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2023-07-25 21:05:10
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2023-08-02 02:51:20
+ * @LastEditTime: 2023-08-03 17:23:16
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -115,21 +115,28 @@
         <div data-v-74a32269="" class="toast tos" style="display: none;">
             <div data-v-74a32269=""></div>
         </div>
+
+
     </div>
+    <!-- <van-dialog id="van-dialog" class="van-dialog" show="{{ show }}" show-cancel-button
+        confirm-button-open-type="getUserInfo" bind:close="onClose" bind:getuserinfo="getUserInfo">
+        <image src="https://img.yzcdn.cn/1.jpg" />
+    </van-dialog> -->
 </template>
 
 <script>
 import { reactive, toRefs, ref, watch } from 'vue';
 import { useCountDown } from '@vant/use';
-import { Toast } from 'vant';
+import { Toast, Dialog } from 'vant';
+// import 'vant/es/dialog/style';
 import * as Verify from '../../api/verify';
 import * as Index from '../../api/index';
-import { showConfirmDialog } from 'vant';
 // 表单字段元素
 export default {
 
     setup() {
 
+        // Dialog({ title: '123232', message: '提示' });
         const countDown = useCountDown({
             time: 15 * 60 * 1000,
             millisecond: true,
@@ -183,9 +190,22 @@ export default {
                     isShow.value = true;
                     console.log(result);
                     console.log(isShow.value);
-                    setInterval(() => {
-                        window.location.href = 'http://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);
-                    }, 1000);
+                    // show.value = true;
+                    if (isShow.value == true) {
+                        console.log(isShow.value);
+                        Dialog.confirm({
+                            title: '确认支付',
+                            message: '请确认是否完成支付',
+                            confirmButtonText: '已支付'
+                        }).then(() => {
+                            // on confirm
+                        })
+
+                    } else {
+                        console.log(2233);
+                    }
+                    // window.location.href = 'http://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);
+                    // setInterval(() => {}, 1000);
 
                 }).catch(err => {
                     if (err.result) {
@@ -199,23 +219,33 @@ export default {
                 })
         };
 
-        const onSubmitCallback = (result) => {
-            console.log(result);
-            isShow = true;
-            setInterval(() => {
-                window.location.href = 'http://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);
-            }, 1000);
+        // const onSubmitCallback = (result) => {
+        //     console.log(result);
+        //     isShow = true;
+        //     setInterval(() => {
+        //         window.location.href = 'http://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment) + '&redirect_url=' + encodeURIComponent('http://tgqy.yueyueyouqian.cn/dw.html');
+        //     }, 1000);
 
+        // };
+
+        const beforeClose = (action, done) => { // 点击事件 - 备注按钮提示框
+            if (action === 'confirm') { // 确认
+                console.log('[点击事件 - 备注] - 确认');
+
+                // 关闭提示框
+            } else if (action === 'cancel') { // 取消
+                console.log('[点击事件 - 备注] - 取消');
+                // 关闭提示框
+            }
         };
 
         watch(() => isShow, () => {
             if (isShow.value == true) {
-                showConfirmDialog({
+                Dialog.confirm({
                     title: '标题',
                     message: '如果解决方法是丑陋的，那就肯定还有更好的解决方法，只是还没有发现而已。',
-
                 }).then(() => {
-                    // on confirm
+                    //on confirm
                 }).catch(() => {
                     // on cancel
                 });
@@ -229,9 +259,11 @@ export default {
             onSubmit,
             validteData,
             submitBuy,
-            onSubmitCallback,
+            // onSubmitCallback,
             mobile,
-            isShow
+            isShow,
+            beforeClose
+            // show
             // mode
         };
     },
@@ -269,6 +301,29 @@ export default {
 
 /deep/ .van-field__control::-webkit-input-placeholder {
     color: #757575
+}
+
+.wrapper1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.block1 {
+    width: 120px;
+    height: 120px;
+    background-color: #fff;
+}
+
+.van-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--van-overlay-z-index);
+    width: 100%;
+    height: 100%;
+    background: var(--van-overlay-background);
 }
 </style>
 
