@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2023-07-25 21:05:10
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2023-08-03 17:23:16
+ * @LastEditTime: 2023-08-07 02:54:59
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -118,14 +118,10 @@
 
 
     </div>
-    <!-- <van-dialog id="van-dialog" class="van-dialog" show="{{ show }}" show-cancel-button
-        confirm-button-open-type="getUserInfo" bind:close="onClose" bind:getuserinfo="getUserInfo">
-        <image src="https://img.yzcdn.cn/1.jpg" />
-    </van-dialog> -->
 </template>
 
 <script>
-import { reactive, toRefs, ref, watch } from 'vue';
+import { reactive, toRefs, ref, onMounted } from 'vue';
 import { useCountDown } from '@vant/use';
 import { Toast, Dialog } from 'vant';
 // import 'vant/es/dialog/style';
@@ -136,13 +132,11 @@ export default {
 
     setup() {
 
-        // Dialog({ title: '123232', message: '提示' });
         const countDown = useCountDown({
             time: 15 * 60 * 1000,
             millisecond: true,
         });
         countDown.start();
-
 
         const form = reactive({
             form: {
@@ -159,9 +153,37 @@ export default {
 
         });
 
-        // const mode = ref('Coupon');
+        var isShow = sessionStorage.getItem("isShow");
+        console.log(isShow)
+
+        onMounted(() => {
+            console.log(1222);
+            console.log(isShow === 'true')
+
+            if (isShow == 'true') {
+                console.log('isc');
+                Dialog.confirm({
+                    title: '确认支付',
+                    message: '请确认是否完成支付',
+                    confirmButtonText: '已支付',
+                    width: '300px',
+                }).then(() => {
+                    console.log(111);
+                    //on confirm
+                }).catch(() => {
+                    console.log(2222);
+                    // on cancel
+                });
+            }
+        });
+
+
+
+
+
+
+
         const mobile = ref('');
-        const isShow = ref(false);
         const onSubmit = (value) => {
             console.log(value);
             if (validteData(value.telphone)) {
@@ -187,24 +209,26 @@ export default {
             form.form.mobile = str;
             Index.register(form).
                 then(result => {
-                    isShow.value = true;
+                    sessionStorage.setItem("isShow", true);
                     console.log(result);
-                    console.log(isShow.value);
-                    // show.value = true;
-                    if (isShow.value == true) {
-                        console.log(isShow.value);
+                    isShow = sessionStorage.getItem("isShow");
+                    console.log(isShow);
+                    if (isShow == true) {
                         Dialog.confirm({
                             title: '确认支付',
                             message: '请确认是否完成支付',
-                            confirmButtonText: '已支付'
+                            confirmButtonText: '已支付',
+                            width: '300px',
                         }).then(() => {
-                            // on confirm
-                        })
-
-                    } else {
-                        console.log(2233);
+                            console.log(111);
+                            //on confirm
+                        }).catch(() => {
+                            console.log(2222);
+                            // on cancel
+                        });
                     }
-                    // window.location.href = 'http://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);
+
+                    window.location.href = 'http://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);
                     // setInterval(() => {}, 1000);
 
                 }).catch(err => {
@@ -239,19 +263,6 @@ export default {
             }
         };
 
-        watch(() => isShow, () => {
-            if (isShow.value == true) {
-                Dialog.confirm({
-                    title: '标题',
-                    message: '如果解决方法是丑陋的，那就肯定还有更好的解决方法，只是还没有发现而已。',
-                }).then(() => {
-                    //on confirm
-                }).catch(() => {
-                    // on cancel
-                });
-
-            }
-        });
 
         return {
             ...toRefs(form),
@@ -315,15 +326,32 @@ export default {
     height: 120px;
     background-color: #fff;
 }
+</style>
+<style>
+.van-dialog {
+    font-size: 22px !important;
+    height: 2.2rem !important;
 
-.van-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: var(--van-overlay-z-index);
-    width: 100%;
-    height: 100%;
-    background: var(--van-overlay-background);
+}
+
+.van-dialog__header {
+    font-size: 0.35rem
+}
+
+.van-dialog__message {
+    font-size: 0.35rem;
+    display: flex;
+    flex-direction: column;
+    line-height: 0.85rem
+}
+
+.van-dialog__content {
+    height: 1.1rem
+}
+
+.van-dialog__cancel,
+.van-dialog__confirm {
+    font-size: 0.4rem;
 }
 </style>
 
