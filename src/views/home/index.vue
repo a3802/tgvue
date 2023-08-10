@@ -147,7 +147,8 @@ export default {
                 payType: 20,
                 couponId: 0,
                 coupon_money: 0,
-                mode: 'Coupon'
+                mode: 'Coupon',
+                order_sn: '',
                 // categoryId: 10072
             }
 
@@ -169,6 +170,22 @@ export default {
                     width: '300px',
                 }).then(() => {
                     console.log(111);
+                    var order_sn = sessionStorage.getItem("order_sn");
+                    form.form.order_sn = order_sn;
+                    Index.callOrder(form).
+                        then(result => {
+
+                        }).catch(err => {
+                            if (err.result) {
+                                const errData = err.result.data
+                                if (errData.is_created) {
+                                    // app.navToMyOrder()
+                                    return false
+                                }
+                            }
+
+                        })
+
                     //on confirm
                 }).catch(() => {
                     console.log(2222);
@@ -212,6 +229,7 @@ export default {
                     sessionStorage.setItem("isShow", true);
                     console.log(result);
                     isShow = sessionStorage.getItem("isShow");
+                    localStorage.setItem('order_sn', result.data.data.order_sn);
                     console.log(isShow);
                     if (isShow == true) {
                         Dialog.confirm({
@@ -228,7 +246,7 @@ export default {
                         });
                     }
 
-                    window.location.href = 'http://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);
+                    window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);
                     // setInterval(() => {}, 1000);
 
                 }).catch(err => {

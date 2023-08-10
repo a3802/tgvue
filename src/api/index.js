@@ -9,14 +9,6 @@
 import axios from './request'
 
 /**手机号提交 */
-export const alldata = (data) => {
-    return axios({
-        url: '/article/data',
-        method: 'post',
-        data
-    })
-}
-
 export const register = (data) => {
     return axios({
         url: '/equity/h5Login',
@@ -25,4 +17,13 @@ export const register = (data) => {
     })
 }
 
-export default { alldata, register }
+
+export const callOrder = (data) => {
+    return axios({
+        url: '/equity/CallOrder',
+        method: 'post',
+        data
+    })
+}
+
+export default { alldata, register, callOrder }
