@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2023-07-25 21:05:10
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2023-08-07 02:54:59
+ * @LastEditTime: 2023-08-10 22:27:25
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -163,41 +163,45 @@ export default {
 
             if (isShow == 'true') {
                 console.log('isc');
+                var order_sn = sessionStorage.getItem("order_sn");
+                form.form.order_sn = order_sn;
                 Dialog.confirm({
                     title: '确认支付',
                     message: '请确认是否完成支付',
                     confirmButtonText: '已支付',
                     width: '300px',
                 }).then(() => {
-                    console.log(111);
-                    var order_sn = sessionStorage.getItem("order_sn");
-                    form.form.order_sn = order_sn;
+                    sessionStorage.setItem("isShow", false);
                     Index.callOrder(form).
                         then(result => {
-
-                        }).catch(err => {
-                            if (err.result) {
-                                const errData = err.result.data
-                                if (errData.is_created) {
-                                    // app.navToMyOrder()
-                                    return false
-                                }
+                            console.log(result);
+                            if (result.status == 200) {
+                                window.location.href = 'https://tgqy.yueyueyouqian.cn/dw.html';
+                            } else {
+                                Toast('支付失败');
                             }
+                        }).catch(err => {
+                            Toast('支付失败');
 
                         })
 
-                    //on confirm
                 }).catch(() => {
-                    console.log(2222);
-                    // on cancel
+                    sessionStorage.setItem("isShow", false);
+                    Index.callOrder(form).
+                        then(result => {
+                            console.log(result);
+                            if (result.status == 200) {
+                                window.location.href = 'https://tgqy.yueyueyouqian.cn/dw.html';
+                            } else {
+                                Toast('支付失败');
+                            }
+                        }).catch(err => {
+                            Toast('支付失败');
+
+                        })
                 });
             }
         });
-
-
-
-
-
 
 
         const mobile = ref('');
@@ -230,21 +234,6 @@ export default {
                     console.log(result);
                     isShow = sessionStorage.getItem("isShow");
                     localStorage.setItem('order_sn', result.data.data.order_sn);
-                    console.log(isShow);
-                    if (isShow == true) {
-                        Dialog.confirm({
-                            title: '确认支付',
-                            message: '请确认是否完成支付',
-                            confirmButtonText: '已支付',
-                            width: '300px',
-                        }).then(() => {
-                            console.log(111);
-                            //on confirm
-                        }).catch(() => {
-                            console.log(2222);
-                            // on cancel
-                        });
-                    }
 
                     window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);
                     // setInterval(() => {}, 1000);
@@ -261,26 +250,6 @@ export default {
                 })
         };
 
-        // const onSubmitCallback = (result) => {
-        //     console.log(result);
-        //     isShow = true;
-        //     setInterval(() => {
-        //         window.location.href = 'http://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment) + '&redirect_url=' + encodeURIComponent('http://tgqy.yueyueyouqian.cn/dw.html');
-        //     }, 1000);
-
-        // };
-
-        const beforeClose = (action, done) => { // 点击事件 - 备注按钮提示框
-            if (action === 'confirm') { // 确认
-                console.log('[点击事件 - 备注] - 确认');
-
-                // 关闭提示框
-            } else if (action === 'cancel') { // 取消
-                console.log('[点击事件 - 备注] - 取消');
-                // 关闭提示框
-            }
-        };
-
 
         return {
             ...toRefs(form),
@@ -288,10 +257,8 @@ export default {
             onSubmit,
             validteData,
             submitBuy,
-            // onSubmitCallback,
             mobile,
             isShow,
-            beforeClose
             // show
             // mode
         };
