@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2023-07-25 21:05:10
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2023-08-10 22:27:25
+ * @LastEditTime: 2023-08-20 22:39:33
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -86,7 +86,7 @@
                 <!---->
 
                 <div class="pay_phone_number_button">
-                    <van-button round block native-type="submit" class="pay_button" style="">
+                    <van-button round block native-type="submit" class="pay_button" style="height: 0;">
                         立即充值
                     </van-button>
                     <div class="pay_phone_number_tips">节省70.1元</div>
@@ -155,11 +155,8 @@ export default {
         });
 
         var isShow = sessionStorage.getItem("isShow");
-        console.log(isShow)
 
         onMounted(() => {
-            console.log(1222);
-            console.log(isShow === 'true')
 
             if (isShow == 'true') {
                 console.log('isc');
@@ -208,7 +205,8 @@ export default {
         const onSubmit = (value) => {
             console.log(value);
             if (validteData(value.telphone)) {
-                submitBuy(value.telphone)
+                let res = submitBuy(value.telphone)
+                if (res.status == 500) Toast(res.message);
             }
         };
 
@@ -225,28 +223,38 @@ export default {
             return true
         };
 
+        // 取url中的参数值
+        const getQuery = (name) => {
+            let geturl = window.location.href
+            let getqyinfo = geturl.split('?')[1]
+            let params = new URLSearchParams('?' + getqyinfo);
+            return params.get(name);
+        };
+
+
         //提交数据
         const submitBuy = (str) => {
             form.form.mobile = str;
+            console.log(getQuery('channel'));
+            form.form.channel = getQuery('channel');
             Index.register(form).
                 then(result => {
-                    sessionStorage.setItem("isShow", true);
-                    console.log(result);
-                    isShow = sessionStorage.getItem("isShow");
-                    localStorage.setItem('order_sn', result.data.data.order_sn);
+                    if (result.status == 500) {
 
-                    window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);
-                    // setInterval(() => {}, 1000);
+                        Toast(result.message)
 
-                }).catch(err => {
-                    if (err.result) {
-                        const errData = err.result.data
-                        if (errData.is_created) {
-                            // app.navToMyOrder()
-                            return false
-                        }
+                    } else {
+
+                        sessionStorage.setItem("isShow", true);
+                        console.log(result);
+                        isShow = sessionStorage.getItem("isShow");
+                        sessionStorage.setItem('order_sn', result.data.data.order_sn);
+                        window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);
                     }
 
+
+                }).catch(err => {
+                    console.log(err);
                 })
         };
 
@@ -259,6 +267,7 @@ export default {
             submitBuy,
             mobile,
             isShow,
+            getQuery
             // show
             // mode
         };
@@ -334,9 +343,17 @@ export default {
     height: 1.1rem
 }
 
+.van-button__content {
+    height: unset;
+}
+
 .van-dialog__cancel,
 .van-dialog__confirm {
     font-size: 0.4rem;
+}
+.van-toast__text{
+    font-size: 46px;
+    line-height: 46px;
 }
 </style>
 

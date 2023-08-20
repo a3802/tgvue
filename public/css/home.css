@@ -216,7 +216,8 @@
     width: 90%;
     margin: 0.2rem auto;
     cursor: pointer;
-    letter-spacing: .1rem
+    letter-spacing: .1rem;
+    height: 26px;
 }
 
 .pay_phone_number_tips {
