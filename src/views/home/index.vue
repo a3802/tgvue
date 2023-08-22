@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2023-07-25 21:05:10
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2023-08-20 22:39:33
+ * @LastEditTime: 2023-08-23 02:13:28
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -99,7 +99,8 @@
             <router-link to="/rule" class="nav-item" active-class="nav-color">
                 规则
             </router-link>
-            <a href="https://kefu.xianshangzixun.com/web/im?cptid=d4645200bee7">客服</a>
+            <a href="https://tb.53kf.com/code/client/818133c55cba154d3d56d99366e4b4475/1">客服</a>
+            <!-- <a href="https://kefu.xianshangzixun.com/web/im?cptid=d4645200bee7">客服</a> -->
         </div>
         <div class="model2">
             <div class="model2-title">话费优惠券券包说明</div>
@@ -351,7 +352,8 @@ export default {
 .van-dialog__confirm {
     font-size: 0.4rem;
 }
-.van-toast__text{
+
+.van-toast__text {
     font-size: 46px;
     line-height: 46px;
 }
