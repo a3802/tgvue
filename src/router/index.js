@@ -10,7 +10,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 const router = createRouter({
     history: createWebHashHistory(),
     routes: [{
-            path: '/',
+            path: '/tuq',
             component: () =>
                 import ('../views/home')
         },
