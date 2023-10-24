@@ -140,14 +140,20 @@
 .pay_phone_money_price_item .orign_price p {
     font-size: .6rem;
     text-align: center;
-    color: #dad1d1;
+    color: red;
     font-weight: 700;
-    margin-top: .16rem
+    margin-top: .16rem;
+    display: inline;
 }
 
 .pay_phone_money_price_item .orign_price p :after {
     content: "元";
     font-size: .3rem
+}
+
+.pay_phone_money_price_item .orign_price span {
+    color: red;
+    padding-left: 2px;
 }
 
 .type_active {
@@ -170,6 +176,7 @@
     line-height: 19px;
     color: red;
     margin-top: .18rem;
+    text-align: center;
 }
 
 .choose_price_item .right_bottom_img,
@@ -359,7 +366,7 @@
 
 .model2 {
     position: relative;
-    margin: 0 .16rem 2rem .4rem;
+    margin: 0 .2rem;
     background: #fff;
     border-radius: .2rem;
     padding: .3rem .18rem .44rem

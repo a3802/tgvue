@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2023-07-25 21:05:10
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2023-08-23 02:13:28
+ * @LastEditTime: 2023-10-08 23:25:59
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -54,17 +54,20 @@
                     <div class="pay_phone_money_price_item">
                         <div class="orign_price">
                             <p>20</p>
+                            <span>元</span> 
                         </div>
                     </div>
                     <div class="pay_phone_money_price_item type_active">
                         <div class="orign_price">
-                            <p>100</p>
+                               <p>100</p>
+                               <span>元</span> 
                             <div class="price" style="margin-top: 0px;">实付29.9元</div>
                         </div>
                     </div>
                     <div class="pay_phone_money_price_item">
                         <div class="orign_price">
                             <p>50</p>
+                            <span>元</span> 
                         </div>
                     </div>
                 </div>
@@ -95,7 +98,7 @@
             </van-form>
         </div>
         <div class="rightInfo">
-            <a href="/cqy6/qy_refund?cid=0">极速退款</a>
+            <!-- <a href="/cqy6/qy_refund?cid=0">极速退款</a> -->
             <router-link to="/rule" class="nav-item" active-class="nav-color">
                 规则
             </router-link>
@@ -113,8 +116,8 @@
             </div>
             <!---->
         </div>
-        <div data-v-74a32269="" class="toast tos" style="display: none;">
-            <div data-v-74a32269=""></div>
+        <div  class="toast tos" style="display: none;">
+            <div></div>
         </div>
 
 
