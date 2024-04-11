@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2024-04-11 19:09:51
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2024-04-12 03:09:51
+ * @LastEditTime: 2024-04-12 04:40:42
  * @FilePath: \tgvue\src\views\takecust\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -22,6 +22,9 @@
         </div>
     </div>
 
+
+
+
     <van-tabbar v-model="active">
         <van-tabbar-item>
             <span>权益领取</span>
@@ -38,19 +41,34 @@
     </van-tabbar>
 
 
-    <van-dialog v-mode:show="showPopup" title="标题" show-cancel-button>
-        <van-cell-group inset>
-            <van-field v-model="tel" type="tel" label="手机号" />
-        </van-cell-group>
+    <van-dialog  v-model:show="showDialog" title="标题1" show-cancel-button>
+      <template v-if="showDialog">
+        <!-- 这里是自定义的内容 -->
+        <div>
+          <p>这是自定义的对话框内容。</p>
+          <p>你可以在这里放置任何你需要的组件或 HTML。</p>
+          <!-- 如果需要，你也可以在这里引入和使用其他 Vue 组件 -->
+        </div>
+      </template>
+      <template v-else>
+                  <p>这ssssssssss框内容。</p>
+          <p>你可以在这里放置任何你需要的组件或 HTML。</p>
+        <!-- 这里是对话框未显示时的占位内容（可选） -->
+      </template>
+
     </van-dialog>
+
     
     
 </template>
 <script>
-import { ref } from 'vue';
-import { Dialog } from 'vant';
+import { ref,onMounted,reactive, toRefs } from 'vue';
 
 export default {
+
+    //   components: {
+    //     [Dialog.name]: Dialog,
+    //   },
   setup() {
     const active = ref(0);
     const icon = {
@@ -62,23 +80,40 @@ export default {
       inactive: 'https://image.hrzhuolin.com/tggy/Icon/qy/tlist.png',
     };
 
-    const tel = ref('');
     const arr = ['一','二','三','四','五','六','七','八','九','十'];
-    const showPopup = ref(false)
+
+    const showDialog  = ref(false);
+
+    console.log(showDialog.value);
 
     const handleItemClick = (value) => {
+        
+
         console.log(value);
-        let showPopup = true
 
     };
+    // 确认按钮的回调
+    const onConfirm = () => {
+      console.log('点击了确认按钮');
+      showDialog.value = false; // 关闭对话框
+    };
+
+    // 取消按钮的回调
+    const onCancel = () => {
+      console.log('点击了取消按钮');
+      showDialog.value = false; // 关闭对话框
+    };
+
 
     return {
       icon,
       icon1,
       active,
-      tel,
       arr,
-      handleItemClick
+      handleItemClick,
+      showDialog,
+      onConfirm,
+      onCancel,
 
     };
   }
@@ -116,6 +151,25 @@ h6 {
 
 .van-tabbar-item__text span {
     font-size: 0.2rem;
+}
+
+
+.wxpDialogContentClass{
+  padding: 10px 8px;
+  word-wrap: break-word;
+  font-size: 14px;
+  white-space: pre-wrap;
+  color: #646566;
+  max-height: 60vh;
+  overflow: auto;
+  line-height: 20px;
+}
+ 
+ 
+.wxContent{
+  display: block;
+  max-height: 65vh;
+  overflow: auto;
 }
 
 </style>
