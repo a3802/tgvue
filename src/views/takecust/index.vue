@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2024-04-11 19:09:51
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2024-04-12 04:40:42
+ * @LastEditTime: 2024-04-15 04:44:19
  * @FilePath: \tgvue\src\views\takecust\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -14,7 +14,7 @@
         </div>
         <div class="content">
             <ul>
-                <li class="list_atr" v-for="(item,index) in arr" v-bind:key="index" @click="handleItemClick(index)">
+                <li class="list_atr" v-for="(item,index) in arr" v-bind:key="index" @click="handleItemClick(item,index)">
                     <van-image width="100px" height="100px" src="https://phone-card-cx.oss-cn-beijing.aliyuncs.com/image/20240304/0bf02b20-9c02-4c47-8be5-f80bd58a19d9.png"/>
                     <div>第{{item}}个月10元</div>
                 </li>                
@@ -41,35 +41,43 @@
     </van-tabbar>
 
 
-    <van-dialog  v-model:show="showDialog" title="标题1" show-cancel-button>
+    <v-dialog  v-model:show="showDialog" show-cancel-button @cancel="onCancel" @confirm="onConfirm">
+      <slot><div class="title_atr">第{{title_text}}月10元</div></slot>
       <template v-if="showDialog">
-        <!-- 这里是自定义的内容 -->
-        <div>
-          <p>这是自定义的对话框内容。</p>
-          <p>你可以在这里放置任何你需要的组件或 HTML。</p>
-          <!-- 如果需要，你也可以在这里引入和使用其他 Vue 组件 -->
+        <van-cell-group inset>
+          <van-field v-model="tel" required type="tel" label="手机号" placeholder="请输入手机号"/>
+        </van-cell-group>
+        <div class="message_text">
+          <span>请输入注册手机号领取话费权益</span>
+          <span>话费会在24小时内到账,请耐心等待</span>
         </div>
       </template>
-      <template v-else>
-                  <p>这ssssssssss框内容。</p>
-          <p>你可以在这里放置任何你需要的组件或 HTML。</p>
-        <!-- 这里是对话框未显示时的占位内容（可选） -->
-      </template>
 
-    </van-dialog>
+    </v-dialog>
 
     
     
 </template>
 <script>
 import { ref,onMounted,reactive, toRefs } from 'vue';
+import { Icon, Toast, Dialog } from 'vant';
 
 export default {
 
-    //   components: {
-    //     [Dialog.name]: Dialog,
-    //   },
+  components: {
+    'v-dialog': Dialog.Component,
+  },  
+
   setup() {
+
+    const autosize = {
+      maxHeight: 2000,
+      minHeight: 1000
+    };
+
+    const title_text = ref(0);
+    const tel = ref('');
+
     const active = ref(0);
     const icon = {
       active: 'https://image.hrzhuolin.com/tggy/Icon/qy/tcoupona.png',
@@ -86,10 +94,12 @@ export default {
 
     console.log(showDialog.value);
 
-    const handleItemClick = (value) => {
-        
+    const handleItemClick = (key,value) => {
 
-        console.log(value);
+
+        title_text.value = key;       
+        showDialog.value = true;
+
 
     };
     // 确认按钮的回调
@@ -101,6 +111,7 @@ export default {
     // 取消按钮的回调
     const onCancel = () => {
       console.log('点击了取消按钮');
+      tel.value = '';
       showDialog.value = false; // 关闭对话框
     };
 
@@ -114,6 +125,9 @@ export default {
       showDialog,
       onConfirm,
       onCancel,
+      autosize,
+      title_text,
+      tel
 
     };
   }
@@ -154,6 +168,8 @@ h6 {
 }
 
 
+
+
 .wxpDialogContentClass{
   padding: 10px 8px;
   word-wrap: break-word;
@@ -177,5 +193,45 @@ h6 {
 <style>
 :root {
     --van-tabbar-height: 120px;
+    --van-dialog-message-max-height:200px;
+    --van-dialog-message-line-height: 200px;
+    --van-dialog-message-padding: 200px;
+    /* --van-dialog-header-padding-top: 40px; */
+    --van-dialog-header-line-height: 30px;
+    --van-cell-group-inset-padding: 20px;
+    --van-field-label-color: #666
+    
 }
+.van-field__label {
+  display: flex;
+  align-items: center;
+}
+
+.van-field__control {
+  line-height:50px;
+  background-color: #efefef;;
+}
+
+.van-dialog {
+  width:480px;
+}
+.van-dialog__content{
+  padding: 10px 0 50px 0;
+}
+.title_atr {
+  text-align:center;
+  margin: 0.3rem 0;
+  padding: 0 0 0.1rem 0;
+  border-bottom: 1px solid #f7f4f4;
+  font-size: 0.23rem;
+}
+.message_text {
+    font-size: 0.1rem;
+    padding: 0 0.35rem;
+    color: #666;
+}
+.van-dialog__footer {
+  margin-bottom: 10px;
+}
+
 </style>
