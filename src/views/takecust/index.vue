@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2024-04-11 19:09:51
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2024-04-15 04:44:19
+ * @LastEditTime: 2024-04-16 07:10:40
  * @FilePath: \tgvue\src\views\takecust\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -44,13 +44,13 @@
     <v-dialog  v-model:show="showDialog" show-cancel-button @cancel="onCancel" @confirm="onConfirm">
       <slot><div class="title_atr">第{{title_text}}月10元</div></slot>
       <template v-if="showDialog">
-        <van-cell-group inset>
-          <van-field v-model="tel" required type="tel" label="手机号" placeholder="请输入手机号"/>
-        </van-cell-group>
-        <div class="message_text">
-          <span>请输入注册手机号领取话费权益</span>
-          <span>话费会在24小时内到账,请耐心等待</span>
-        </div>
+          <van-cell-group inset>
+            <van-field v-model="mobile" required type="number" label="手机号" placeholder="请输入手机号"/>
+          </van-cell-group>
+          <div class="message_text">
+            <span>请输入注册手机号领取话费权益</span>
+            <span>话费会在24小时内到账,请耐心等待</span>
+          </div>
       </template>
 
     </v-dialog>
@@ -61,6 +61,8 @@
 <script>
 import { ref,onMounted,reactive, toRefs } from 'vue';
 import { Icon, Toast, Dialog } from 'vant';
+import * as Verify from '../../api/verify';
+import * as Index from '../../api/index';
 
 export default {
 
@@ -76,7 +78,7 @@ export default {
     };
 
     const title_text = ref(0);
-    const tel = ref('');
+    const mobile = ref('');
 
     const active = ref(0);
     const icon = {
@@ -92,7 +94,21 @@ export default {
 
     const showDialog  = ref(false);
 
-    console.log(showDialog.value);
+    const form = reactive({
+      form: {
+          mobile: '',
+          isParty: false,
+          partyData: {},
+          productId: 310072,
+          payType: 20,
+          couponId: 0,
+          coupon_money: 0,
+          mode: 'Coupon',
+          order_sn: '',
+          // categoryId: 10072
+      }
+
+    });
 
     const handleItemClick = (key,value) => {
 
@@ -104,14 +120,29 @@ export default {
     };
     // 确认按钮的回调
     const onConfirm = () => {
+      console.log(mobile.value);
       console.log('点击了确认按钮');
       showDialog.value = false; // 关闭对话框
+
+      Index.investPay(form).
+          then(result => {
+              console.log(result);
+              if (result.status == 200) {
+                  Toast('支付成功,请耐心等待');
+              } else {
+                  Toast('支付失败');
+              }
+          }).catch(err => {
+              Toast('支付失败');
+
+          })
+
     };
 
     // 取消按钮的回调
     const onCancel = () => {
       console.log('点击了取消按钮');
-      tel.value = '';
+      mobile.value = '';
       showDialog.value = false; // 关闭对话框
     };
 
@@ -127,7 +158,7 @@ export default {
       onCancel,
       autosize,
       title_text,
-      tel
+      mobile
 
     };
   }
