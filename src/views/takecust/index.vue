@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2024-04-11 19:09:51
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2024-04-16 07:10:40
+ * @LastEditTime: 2024-04-17 03:53:10
  * @FilePath: \tgvue\src\views\takecust\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -15,8 +15,8 @@
         <div class="content">
             <ul>
                 <li class="list_atr" v-for="(item,index) in arr" v-bind:key="index" @click="handleItemClick(item,index)">
-                    <van-image width="100px" height="100px" src="https://phone-card-cx.oss-cn-beijing.aliyuncs.com/image/20240304/0bf02b20-9c02-4c47-8be5-f80bd58a19d9.png"/>
-                    <div>第{{item}}个月10元</div>
+                    <van-image src="https://phone-card-cx.oss-cn-beijing.aliyuncs.com/image/20240304/0bf02b20-9c02-4c47-8be5-f80bd58a19d9.png"/>
+                    <div class="atr_title">第{{item}}个月10元</div>
                 </li>                
             </ul>
         </div>
@@ -45,7 +45,7 @@
       <slot><div class="title_atr">第{{title_text}}月10元</div></slot>
       <template v-if="showDialog">
           <van-cell-group inset>
-            <van-field v-model="mobile" required type="number" label="手机号" placeholder="请输入手机号"/>
+            <van-field v-model="mobile" required type="number"  placeholder="请输入手机号" class="num_text"/>
           </van-cell-group>
           <div class="message_text">
             <span>请输入注册手机号领取话费权益</span>
@@ -55,7 +55,9 @@
 
     </v-dialog>
 
-    
+    <div  class="toast tos" style="display: none;">
+        <div></div>
+    </div>
     
 </template>
 <script>
@@ -97,47 +99,73 @@ export default {
     const form = reactive({
       form: {
           mobile: '',
-          isParty: false,
-          partyData: {},
-          productId: 310072,
-          payType: 20,
-          couponId: 0,
-          coupon_money: 0,
           mode: 'Coupon',
           order_sn: '',
+          num: ''
           // categoryId: 10072
       }
 
     });
 
-    const handleItemClick = (key,value) => {
+    const handleItemClick = (value,key) => {
 
-
-        title_text.value = key;       
+        title_text.value = value;       
         showDialog.value = true;
 
-
     };
+
+    const findKeyByValue = (array,value) => {
+        return array.findIndex(element => element === value);
+    };
+
+    // 验证手机号
+    const validteData = (str) => {
+        if (Verify.isEmpty(str)) {
+            Toast('请输入手机号');
+            return false
+        }
+        if (!Verify.isMobile(str)) {
+            Toast('请输入正确格式的手机号')
+            return false
+        }
+        return true
+    };
+
     // 确认按钮的回调
     const onConfirm = () => {
       console.log(mobile.value);
+      if (validteData(mobile.value)) {
+          let res = submitBuy(mobile.value)
+          if (res.status == 500) Toast(res.message);
+      }
+
       console.log('点击了确认按钮');
       showDialog.value = false; // 关闭对话框
 
+
+    };
+
+
+    const submitBuy = (str) => {
+      var order_sn = '202404161342181258336331';
+      form.form.order_sn = order_sn;
+      form.form.mobile = str;
+      form.form.num = findKeyByValue(arr,title_text.value);
       Index.investPay(form).
           then(result => {
               console.log(result);
               if (result.status == 200) {
-                  Toast('支付成功,请耐心等待');
+                  Toast('充值成功,请耐心等待');
               } else {
-                  Toast('支付失败');
+                  Toast(result.message);
               }
           }).catch(err => {
-              Toast('支付失败');
+              Toast('充值失败');
 
           })
 
     };
+
 
     // 取消按钮的回调
     const onCancel = () => {
@@ -190,6 +218,7 @@ h6 {
     text-align: center;
 }
 
+
 .van-tabbar-item__icon img {
     height: 0.6rem;
 }
@@ -199,7 +228,12 @@ h6 {
 }
 
 
-
+/deep/ .van-image {
+    float:left;
+    width:1.9rem;
+    height:1.9rem;
+    margin-bottom:0.1rem;
+}
 
 .wxpDialogContentClass{
   padding: 10px 8px;
@@ -257,12 +291,21 @@ h6 {
   font-size: 0.23rem;
 }
 .message_text {
-    font-size: 0.1rem;
-    padding: 0 0.35rem;
+    font-size: 0.2rem;
+    padding: 0 0.85rem;
     color: #666;
+}
+
+.num_text{
+    font-size: 0.3rem;
 }
 .van-dialog__footer {
   margin-bottom: 10px;
+  padding-top: 0.1rem;
+}
+
+.van-dialog__confirm, .van-dialog__cancel {
+  font-size:0.3rem;
 }
 
 </style>
