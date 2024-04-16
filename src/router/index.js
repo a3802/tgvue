@@ -32,7 +32,12 @@ const router = createRouter({
         {
             path: '/takecust',
             component: () =>
-                import ('../views/takecust'),
+                import ('../views/takecust/index.vue'),
+        },
+        {
+            path: '/takecust/list',
+            component: () =>
+                import ('../views/takecust/list.vue'),
         }
     ]
 })

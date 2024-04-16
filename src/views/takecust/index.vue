@@ -26,13 +26,13 @@
 
 
     <van-tabbar v-model="active">
-        <van-tabbar-item>
+        <van-tabbar-item  replace to="/takecust">
             <span>权益领取</span>
             <template #icon="props">
             <img :src="props.active ? icon.active : icon.inactive" />
             </template>
         </van-tabbar-item>
-        <van-tabbar-item>
+        <van-tabbar-item replace to="/takecust/list">
             <span>领取记录</span>
             <template #icon="props">
             <img :src="props.active ? icon1.active : icon1.inactive" />
