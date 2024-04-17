@@ -3,7 +3,7 @@
         <van-cell>
                 <div class="title_header">
                     <span>编号：</span>
-                    <span class="title_sn">HF17126342624532498_1</span>
+                    <span class="title_sn">{{ order.order_sn }}</span>
                     <span class="order_status">成功</span>
                 </div>
                 <div class="order_message">
@@ -11,11 +11,11 @@
                     <div class="message_right">
                         <div class="m_title">
                             <span>名称：</span>
-                            <span>第一个月10元</span>
+                            <span>第{{ list[order.num] }}个月10元</span>
                         </div>
                         <div class="d_title">
                             <span>时间：</span>
-                            <span>2024-04-09 11:24:58</span>
+                            <span>{{ order.create_time }}</span>
                         </div>
                     </div>
                 </div>
@@ -62,13 +62,55 @@ export default {
             inactive: 'https://image.hrzhuolin.com/tggy/Icon/qy/tlist.png',
         };
 
-        const list = ['一','二','三','四','五','六','七','八','九','十'];
+        const list = ['0','一','二','三','四','五','六','七','八','九','十'];
+
+
+        const order = reactive({ 
+
+                create_time: '',
+                num: '',
+                order_sn: ''
+            
+        });
+
+        // 取url中的参数值
+        const getQuery = (name) => {
+            let geturl = window.location.href
+            let getqyinfo = geturl.split('?')[1]
+            let params = new URLSearchParams('?' + getqyinfo);
+            return params.get(name);
+        };
+        onMounted(() => {
+
+            form.form.mobile = str;
+            console.log(getQuery('sn'));
+            var order_sn = getQuery('sn');
+            Index.getUserTen(order_sn).
+                then(result => {
+                    if (result.status == 500) {
+
+                        Toast(result.message)
+
+                    } else {
+                        order.sn = result.data.order_sn;
+                        order.create_time = result.data.create_time;
+                        order.num = result.data.num;
+                    }
+
+
+                }).catch(err => {
+                    console.log(err);
+                }) 
+
+
+        })
 
         return {
             icon,
             icon1,
             active,
-            list
+            list,
+            order
 
         };        
         

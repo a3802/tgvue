@@ -34,4 +34,13 @@ export const investPay = (data) => {
     })
 }
 
-export default { register, callOrder, investPay }
+
+export const getUserTen = (data) => {
+    return axios({
+        url: '/equity/getUserTen',
+        method: 'get',
+        data
+    })
+}
+
+export default { register, callOrder, investPay, getUserTen }

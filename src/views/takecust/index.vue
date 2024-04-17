@@ -133,14 +133,15 @@ export default {
 
     // 确认按钮的回调
     const onConfirm = () => {
+
       console.log(mobile.value);
       if (validteData(mobile.value)) {
+          showDialog.value = false; // 关闭对话框
           let res = submitBuy(mobile.value)
-          if (res.status == 500) Toast(res.message);
       }
+      mobile.value = '';
 
       console.log('点击了确认按钮');
-      showDialog.value = false; // 关闭对话框
 
 
     };
@@ -156,6 +157,7 @@ export default {
               console.log(result);
               if (result.status == 200) {
                   Toast('充值成功,请耐心等待');
+                  return result;
               } else {
                   Toast(result.message);
               }
@@ -163,7 +165,6 @@ export default {
               Toast('充值失败');
 
           })
-
     };
 
 
@@ -234,6 +235,9 @@ h6 {
     height:1.9rem;
     margin-bottom:0.1rem;
 }
+
+
+
 
 .wxpDialogContentClass{
   padding: 10px 8px;
@@ -306,6 +310,11 @@ h6 {
 
 .van-dialog__confirm, .van-dialog__cancel {
   font-size:0.3rem;
+}
+
+.van-toast--text {
+    font-size: 0.36rem;
+    height:50px;
 }
 
 </style>
