@@ -38,7 +38,7 @@ export const investPay = (data) => {
 export const getUserTen = (data) => {
     return axios({
         url: '/equity/getUserTen',
-        method: 'get',
+        method: 'post',
         data
     })
 }

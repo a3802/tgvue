@@ -43,6 +43,7 @@
 <script>
 import { ref,onMounted,reactive, toRefs } from 'vue';
 import { Icon, Toast, Dialog } from 'vant';
+import * as Index from '../../api/index';
 
 export default {
 
@@ -66,10 +67,11 @@ export default {
 
 
         const order = reactive({ 
+                form: {
 
-                create_time: '',
-                num: '',
-                order_sn: ''
+                    order_sn: ''                    
+                }
+
             
         });
 
@@ -82,19 +84,18 @@ export default {
         };
         onMounted(() => {
 
-            form.form.mobile = str;
             console.log(getQuery('sn'));
-            var order_sn = getQuery('sn');
-            Index.getUserTen(order_sn).
+            order.form.order_sn = getQuery('sn');
+            Index.getUserTen(order).
                 then(result => {
                     if (result.status == 500) {
 
                         Toast(result.message)
 
                     } else {
-                        order.sn = result.data.order_sn;
-                        order.create_time = result.data.create_time;
-                        order.num = result.data.num;
+                        order.order_sn = result.data.data.order_sn;
+                        order.create_time = result.data.data.create_time;
+                        order.num = result.data.data.num;
                     }
 
 

@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2024-04-11 19:09:51
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2024-04-17 03:53:10
+ * @LastEditTime: 2024-04-19 01:36:46
  * @FilePath: \tgvue\src\views\takecust\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -148,7 +148,7 @@ export default {
 
 
     const submitBuy = (str) => {
-      var order_sn = '202404161342181258336331';
+      var order_sn = '202404070527318018923923';
       form.form.order_sn = order_sn;
       form.form.mobile = str;
       form.form.num = findKeyByValue(arr,title_text.value);
@@ -314,7 +314,8 @@ h6 {
 
 .van-toast--text {
     font-size: 0.36rem;
-    height:50px;
+    height:1.6rem;
+    line-height:0.5rem;
 }
 
 </style>

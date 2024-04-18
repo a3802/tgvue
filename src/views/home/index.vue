@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2023-07-25 21:05:10
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2024-04-16 23:54:43
+ * @LastEditTime: 2024-04-19 05:01:53
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -177,7 +177,7 @@ export default {
                         then(result => {
                             console.log(result);
                             if (result.status == 200) {
-                                window.location.href = 'https://tgqy.yueyueyouqian.cn/dw.html?sn='+order_sn;
+                                window.location.href = 'https://tgqy.yueyueyouqian.cn/takecharge.html?sn='+order_sn;
                             } else {
                                 Toast('支付失败');
                             }
@@ -192,7 +192,7 @@ export default {
                         then(result => {
                             console.log(result);
                             if (result.status == 200) {
-                                window.location.href = 'https://tgqy.yueyueyouqian.cn/dw.html?sn='+order_sn;
+                                window.location.href = 'https://tgqy.yueyueyouqian.cn/takecharge.html?sn='+order_sn;
                             } else {
                                 Toast('支付失败');
                             }
