@@ -26,13 +26,13 @@
 
 
     <van-tabbar v-model="active">
-        <van-tabbar-item  replace to="/takecust">
+        <van-tabbar-item  replace @click="redirect('takecust')">
             <span>权益领取</span>
             <template #icon="props">
             <img :src="props.active ? icon.active : icon.inactive" />
             </template>
         </van-tabbar-item>
-        <van-tabbar-item replace to="/takecust/list">
+        <van-tabbar-item replace @click="redirect('list')">
             <span>领取记录</span>
             <template #icon="props">
             <img :src="props.active ? icon1.active : icon1.inactive" />
@@ -44,6 +44,7 @@
 import { ref,onMounted,reactive, toRefs } from 'vue';
 import { Icon, Toast, Dialog } from 'vant';
 import * as Index from '../../api/index';
+import { useRouter } from 'vue-router';
 
 export default {
 
@@ -52,6 +53,8 @@ export default {
     },  
 
     setup() {
+
+        const router = useRouter();
 
         const active = ref(1);
         const icon = {
@@ -75,6 +78,16 @@ export default {
             
         });
 
+        const redirect = (str) => {
+            if(str == 'takecust'){
+                router.push('/takecust?sn='+order.order_sn);
+            }else if( str == 'list'){
+                router.push('/takecust/list?sn='+order.order_sn);
+            }else{
+                Toast('系统错误');
+            }
+        };
+
         // 取url中的参数值
         const getQuery = (name) => {
             let geturl = window.location.href
@@ -84,13 +97,13 @@ export default {
         };
         onMounted(() => {
 
-            console.log(getQuery('sn'));
             order.form.order_sn = getQuery('sn');
             Index.getUserTen(order).
                 then(result => {
                     if (result.status == 500) {
 
-                        Toast(result.message)
+                        // Toast(result.message)
+                        Toast('暂未领取话费');
 
                     } else {
                         order.order_sn = result.data.data.order_sn;
@@ -100,7 +113,8 @@ export default {
 
 
                 }).catch(err => {
-                    console.log(err);
+                    // console.log(err);
+                    // Toast('系统错误');
                 }) 
 
 
@@ -111,7 +125,10 @@ export default {
             icon1,
             active,
             list,
-            order
+            order,
+            redirect,
+            router,
+            getQuery
 
         };        
         

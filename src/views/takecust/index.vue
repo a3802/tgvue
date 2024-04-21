@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2024-04-11 19:09:51
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2024-04-19 01:36:46
+ * @LastEditTime: 2024-04-22 06:20:20
  * @FilePath: \tgvue\src\views\takecust\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -13,7 +13,7 @@
            <h6>会员权益</h6>  
         </div>
         <div class="content">
-            <ul>
+            <ul style="height:650px;">
                 <li class="list_atr" v-for="(item,index) in arr" v-bind:key="index" @click="handleItemClick(item,index)">
                     <van-image src="https://phone-card-cx.oss-cn-beijing.aliyuncs.com/image/20240304/0bf02b20-9c02-4c47-8be5-f80bd58a19d9.png"/>
                     <div class="atr_title">第{{item}}个月10元</div>
@@ -26,13 +26,13 @@
 
 
     <van-tabbar v-model="active">
-        <van-tabbar-item  replace to="/takecust">
+        <van-tabbar-item  replace @click="redirect('takecust')">
             <span>权益领取</span>
             <template #icon="props">
             <img :src="props.active ? icon.active : icon.inactive" />
             </template>
         </van-tabbar-item>
-        <van-tabbar-item replace to="/takecust/list">
+        <van-tabbar-item replace @click="redirect('list')">
             <span>领取记录</span>
             <template #icon="props">
             <img :src="props.active ? icon1.active : icon1.inactive" />
@@ -65,6 +65,7 @@ import { ref,onMounted,reactive, toRefs } from 'vue';
 import { Icon, Toast, Dialog } from 'vant';
 import * as Verify from '../../api/verify';
 import * as Index from '../../api/index';
+import { useRouter } from 'vue-router';
 
 export default {
 
@@ -78,6 +79,10 @@ export default {
       maxHeight: 2000,
       minHeight: 1000
     };
+
+    const router = useRouter();
+
+    const order_sn = ref('');
 
     const title_text = ref(0);
     const mobile = ref('');
@@ -106,6 +111,25 @@ export default {
       }
 
     });
+
+    const redirect = (str) => {
+      console.log(str);
+        if(str == 'takecust'){
+            router.push('/takecust?sn='+order_sn.value);
+        }else if( str == 'list'){
+            router.push('/takecust/list?sn='+order_sn.value);
+        }else{
+            Toast('系统错误');
+        }
+    };
+
+            // 取url中的参数值
+    const getQuery = (name) => {
+        let geturl = window.location.href
+        let getqyinfo = geturl.split('?')[1]
+        let params = new URLSearchParams('?' + getqyinfo);
+        return params.get(name);
+    };
 
     const handleItemClick = (value,key) => {
 
@@ -148,8 +172,7 @@ export default {
 
 
     const submitBuy = (str) => {
-      var order_sn = '202404070527318018923923';
-      form.form.order_sn = order_sn;
+      form.form.order_sn = order_sn.value;
       form.form.mobile = str;
       form.form.num = findKeyByValue(arr,title_text.value);
       Index.investPay(form).
@@ -159,7 +182,8 @@ export default {
                   Toast('充值成功,请耐心等待');
                   return result;
               } else {
-                  Toast(result.message);
+                  // Toast(result.message);
+                  Toast('充值失败');
               }
           }).catch(err => {
               Toast('充值失败');
@@ -170,10 +194,17 @@ export default {
 
     // 取消按钮的回调
     const onCancel = () => {
-      console.log('点击了取消按钮');
+      // console.log('点击了取消按钮');
       mobile.value = '';
       showDialog.value = false; // 关闭对话框
     };
+
+    onMounted(() => {
+
+       order_sn.value = getQuery('sn');
+
+
+    });
 
 
     return {
@@ -187,7 +218,10 @@ export default {
       onCancel,
       autosize,
       title_text,
-      mobile
+      mobile,
+      getQuery,
+      redirect,
+      order_sn
 
     };
   }
@@ -202,13 +236,13 @@ h6 {
     display: block;
     font-size: 0.4em;
     margin-block-start: 0.2em;
-    margin-block-end: 1em;
+    margin-block-end: 0.2em;
     font-weight: bold;
     unicode-bidi: isolate;
 }
 
 .item_list {
-    padding:0.3em;
+    padding: 0.1rem 0 0 0.2rem;
 }
 .list_atr {
     float:left;

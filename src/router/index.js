@@ -10,29 +10,10 @@ import { createRouter, createWebHashHistory } from "vue-router";
 const router = createRouter({
     history: createWebHashHistory(),
     routes: [{
-            path: '/',
-            component: () =>
-                import ('../views/home')
-        },
-        {
-            path: '/rule',
-            component: () =>
-                import ('../views/rule'),
-        },
-        {
-            path: '/refund',
-            component: () =>
-                import ('../views/fund'),
-        },
-        {
-            path: '/pay',
-            component: () =>
-                import ('../views/pay'),
-        },
-        {
             path: '/takecust',
             component: () =>
                 import ('../views/takecust/index.vue'),
+            meta: { title: '话费领取' }
         },
         {
             path: '/takecust/list',
@@ -41,5 +22,11 @@ const router = createRouter({
         }
     ]
 })
+
+
+router.beforeEach((to, from, next) => {
+    document.title = to.meta.title || '话费领取';
+    next();
+});
 
 export default router
