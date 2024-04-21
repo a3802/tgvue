@@ -12,7 +12,8 @@ const router = createRouter({
     routes: [{
             path: '/',
             component: () =>
-                import ('../views/home')
+                import ('../views/home'),
+            meta: { title: '100元话费领取' }
         },
         {
             path: '/rule',
@@ -20,26 +21,16 @@ const router = createRouter({
                 import ('../views/rule'),
         },
         {
-            path: '/refund',
-            component: () =>
-                import ('../views/fund'),
-        },
-        {
             path: '/pay',
             component: () =>
                 import ('../views/pay'),
-        },
-        {
-            path: '/takecust',
-            component: () =>
-                import ('../views/takecust/index.vue'),
-        },
-        {
-            path: '/takecust/list',
-            component: () =>
-                import ('../views/takecust/list.vue'),
         }
     ]
-})
+});
+
+router.beforeEach((to, from, next) => {
+    document.title = to.meta.title || '话费月月领取';
+    next();
+});
 
 export default router
