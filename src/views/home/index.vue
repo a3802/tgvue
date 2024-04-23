@@ -197,6 +197,11 @@ export default {
                 coupon_money: 0,
                 mode: 'Coupon',
                 order_sn: '',
+                channel: '',
+                userkey: '',
+                plid: '',
+                a_oId: ''
+
                 // categoryId: 10072
             }
 
@@ -204,6 +209,9 @@ export default {
 
         var isShow = sessionStorage.getItem("isShow");
         var channel = sessionStorage.getItem("channel");
+        var userkey = getQuery("userkey");
+        var plid = getQuery("plid");
+        var a_oId = getQuery("a_oId");
 
         onMounted(() => {
 
@@ -211,12 +219,16 @@ export default {
                 var order_sn = sessionStorage.getItem("order_sn");
                 console.log(order_sn);
                 form.form.order_sn = order_sn;
+                form.form.channel = channel;
+                form.form.userkey = userkey;
+                form.form.plid = plid;
+                form.form.a_oId = a_oId;
                 Dialog.confirm({
                     title: '确认支付',
                     message: '请确认是否完成支付',
                     confirmButtonText: '已支付',
                     width: '300px',
-                }).then(() => {
+                }).then(() => { 
                     sessionStorage.setItem("isShow", false);
                     Index.callOrder(form).
                         then(result => {
@@ -320,7 +332,10 @@ export default {
             mobile,
             isShow,
             getQuery,
-            channel
+            channel,
+            a_oId,
+            userkey,
+            plid
             // show
             // mode
         };
