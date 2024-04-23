@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2023-07-25 21:05:10
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2024-04-22 05:57:52
+ * @LastEditTime: 2024-04-24 04:35:32
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -170,7 +170,6 @@
 <script>
 import { reactive, toRefs, ref, onMounted } from 'vue';
 import { NoticeBar } from 'vant';
-import { useCountDown } from '@vant/use';
 import { Toast, Dialog } from 'vant';
 // import 'vant/es/dialog/style';
 import * as Verify from '../../api/verify';
@@ -179,12 +178,6 @@ import * as Index from '../../api/index';
 export default {
 
     setup() {
-
-        const countDown = useCountDown({
-            time: 15 * 60 * 1000,
-            millisecond: true,
-        });
-        countDown.start();
 
         const form = reactive({
             form: {
@@ -206,6 +199,15 @@ export default {
             }
 
         });
+
+        // 取url中的参数值
+        const getQuery = (name) => {
+            let geturl = window.location.href
+            let getqyinfo = geturl.split('?')[1]
+            let params = new URLSearchParams('?' + getqyinfo);
+            return params.get(name);
+        };
+
 
         var isShow = sessionStorage.getItem("isShow");
         var channel = sessionStorage.getItem("channel");
@@ -234,9 +236,11 @@ export default {
                         then(result => {
                             console.log(result);
                             if (result.status == 200) {
+
+
                                 window.location.href = 'https://tgqy.yueyueyouqian.cn/takecharge.html#/takecust?sn='+order_sn+'&channel='+channel;
                             } else {
-                                // window.location.href = 'https://tgqy.yueyueyouqian.cn/takecharge.html#/takecust?sn='+order_sn+'&channel='+channel;
+
                                 console.log(order_sn);
                                 console.log(channel);
                                 Toast('支付失败');
@@ -254,9 +258,11 @@ export default {
                             if (result.status == 200) {
                                 window.location.href = 'https://tgqy.yueyueyouqian.cn/takecharge.html#/takecust?sn='+order_sn+'&channel='+channel;
                             } else {
+
                                 Toast('支付失败');
                             }
                         }).catch(err => {
+
                             Toast('支付失败');
 
                         })
@@ -287,19 +293,14 @@ export default {
             return true
         };
 
-        // 取url中的参数值
-        const getQuery = (name) => {
-            let geturl = window.location.href
-            let getqyinfo = geturl.split('?')[1]
-            let params = new URLSearchParams('?' + getqyinfo);
-            return params.get(name);
-        };
-
 
         //提交数据
         const submitBuy = (str) => {
             form.form.mobile = str;
             form.form.channel = getQuery('channel');
+            form.form.userkey = userkey;
+            form.form.plid = plid;
+            form.form.a_oId = a_oId;
             Index.register(form).
                 then(result => {
                     if (result.status == 500) {
@@ -325,7 +326,6 @@ export default {
 
         return {
             ...toRefs(form),
-            current: countDown.current,
             onSubmit,
             validteData,
             submitBuy,
