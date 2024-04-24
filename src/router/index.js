@@ -31,6 +31,13 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     document.title = to.meta.title || '话费月月领取';
     next();
+    if (_hmt) {
+        if (to.path) {
+            _hmt.push(['_trackPageview', '/#' + to.fullPath]);
+        }
+    }
+    next();
 });
+
 
 export default router

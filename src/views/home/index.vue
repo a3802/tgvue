@@ -193,7 +193,10 @@ export default {
                 channel: '',
                 userkey: '',
                 plid: '',
-                a_oId: ''
+                a_oId: '',
+                bxm_id: '',
+                qcjParamStr: '',
+                landingid: ''
 
                 // categoryId: 10072
             }
@@ -214,6 +217,9 @@ export default {
         var userkey = getQuery("userkey");
         var plid = getQuery("plid");
         var a_oId = getQuery("a_oId");
+        var bxm_id = getQuery("bxm_id");
+        var qcjParamStr = getQuery("qcjParamStr");
+        var landingid = getQuery("landingid");
 
         onMounted(() => {
 
@@ -225,6 +231,9 @@ export default {
                 form.form.userkey = userkey;
                 form.form.plid = plid;
                 form.form.a_oId = a_oId;
+                form.form.bxm_id = bxm_id;
+                form.form.qcjParamStr = qcjParamStr;
+                form.form.landingid = landingid;
                 Dialog.confirm({
                     title: '确认支付',
                     message: '请确认是否完成支付',
@@ -301,6 +310,9 @@ export default {
             form.form.userkey = userkey;
             form.form.plid = plid;
             form.form.a_oId = a_oId;
+            form.form.bxm_id = bxm_id;
+            form.form.qcjParamStr = qcjParamStr;
+            form.form.landingid = landingid;
             Index.register(form).
                 then(result => {
                     if (result.status == 500) {
@@ -335,7 +347,10 @@ export default {
             channel,
             a_oId,
             userkey,
-            plid
+            plid,
+            bxm_id,
+            qcjParamStr,
+            landingid
             // show
             // mode
         };
