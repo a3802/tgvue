@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2023-07-25 21:05:10
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2024-04-24 04:35:32
+ * @LastEditTime: 2024-04-28 06:36:58
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -16,27 +16,6 @@
 -->
 <template>
     <div id="toTop" class="saveMoney_pay">
-        <div class="blind_box_pay_header" style="justify-content: center; align-items: flex-start;">
-            <div style="display: flex;">
-                <div>
-                    <p class="lock_message1 lock_message1-amend"></p>
-                    <p class="lock_message1"
-                        style="color: #fd2525; font-size: 0.54rem; font-weight: bolder; text-align: center;">
-                        <!-- 享受百元话费优惠券包！ -->
-                    </p>
-                    <van-count-down millisecond :time="time" format="mm:ss:SS" class="lock_message2">
-                        <!-- <template v-slot="timeData">
-                            支付剩余时间
-                            <span class="timeout_second timeout block">{{ current.minutes }}</span>
-                            <span class="colon"> : </span>
-                            <span class="timeout_second timeout block">{{ current.seconds }}</span>
-                            <span class="colon"> : </span>
-                            <span class="timeout_second timeout block">{{ current.milliseconds }}</span>
-                        </template> -->
-                    </van-count-down>
-                </div>
-            </div>
-        </div>
         <div class="pay_phone_money">
             <van-form @submit="onSubmit">
                 <van-cell-group>
@@ -317,7 +296,8 @@ export default {
                 then(result => {
                     if (result.status == 500) {
 
-                        Toast(result.message)
+                        console.log(result.message)
+                        Toast('网络错误')
 
                     } else {
 
@@ -326,7 +306,8 @@ export default {
                         console.log(result);
                         isShow = sessionStorage.getItem("isShow");
                         sessionStorage.setItem('order_sn', result.data.data.order_sn);
-                        window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);
+                        // window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);//wx
+                        window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?pay_string=' + encodeURIComponent(result.data.data.payment);//alipay
                     }
 
 

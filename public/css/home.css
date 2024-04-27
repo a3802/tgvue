@@ -11,9 +11,13 @@
 
 .saveMoney_pay {
     background: url("https://image.hrzhuolin.com/tggy/Icon/qy/bkimage.png") no-repeat top;
-    background-color: #f7f9f9;
-    background-size: 110% auto;
+    background-color: #0e60e0;
+    background-size: 100% 4rem;
+    /* background-image: linear-gradient(to right, blue, red); */
     /* overflow: hidden */
+    height: 24rem;
+    position: absolute;
+    top: -21px;
 }
 
 .blind_box_pay_header {
@@ -84,10 +88,10 @@
 .pay_phone_money {
     position: relative;
     top: 3.5rem;
-    margin: .4rem .16rem 0;
+    margin: .2rem .16rem 0;
     background: #fff;
     border-radius: .2rem;
-    padding: .3rem .28rem
+    padding: .2rem .28rem
 }
 
 .pay_phone_money_item {
@@ -98,18 +102,18 @@
 
 .type_title {
     font-size: .38rem;
-    background: #f6fcff;
+    /* background: #f6fcff; */
     border-radius: 3px;
     font-weight: 700;
     color: #555;
-    margin: .33rem 0 .15rem
+    margin: .23rem 0 .15rem
 }
 
 .pay_phone_money_price {
     display: flex;
     justify-content: space-between;
     font-size: 14px;
-    margin: 17px 0 5px;
+    margin: 5px 0 5px;
     align-items: flex-start;
     flex-wrap: wrap
 }
@@ -216,6 +220,13 @@
     font-size: 15px
 }
 
+.checkboxItem {
+    padding-right: .12rem !important;
+    /* height: .3rem; */
+    padding-top: 0.1rem !important;
+    padding-bottom: .1rem !important;
+}
+
 .pay_phone_number_button {
     animation: myanimation-148daba7 1s infinite;
     font-weight: 700;
@@ -227,7 +238,7 @@
     padding: 16px 0;
     font-size: .4rem;
     width: 90%;
-    margin: 0.2rem auto;
+    margin: 0.1rem auto;
     cursor: pointer;
     letter-spacing: .1rem;
     height: 26px;
@@ -378,7 +389,7 @@
     background: #fff;
     border-radius: .2rem;
     padding: .3rem .18rem .44rem;
-    top: 3rem;
+    top: 3.7rem;
 }
 
 .model2-title {
