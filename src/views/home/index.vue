@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2023-07-25 21:05:10
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2024-04-28 06:36:58
+ * @LastEditTime: 2024-05-04 20:15:15
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -61,19 +61,19 @@
                                 <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang1.png" draggable="false"><span>158****4634 用户购买100元话费券已到账</span>
                             </van-swipe-item>
                             <van-swipe-item>
-                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang2.png" draggable="false"><span>186****8206 用户购买100元话费券已到账</span></van-swipe-item>
+                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang2.png" draggable="false"><span>183****8106 用户购买100元话费券已到账</span></van-swipe-item>
                             <van-swipe-item>
-                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang3.png" draggable="false"><span>159****0502 用户购买100元话费券已到账</span></van-swipe-item>
+                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang3.png" draggable="false"><span>159****0702 用户购买100元话费券已到账</span></van-swipe-item>
                             <van-swipe-item>
-                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang4.png" draggable="false"><span>150****6044 用户购买100元话费券已到账</span></van-swipe-item>
+                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang4.png" draggable="false"><span>151****2044 用户购买100元话费券已到账</span></van-swipe-item>
                             <van-swipe-item>
-                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang5.png" draggable="false"><span>176****9298 用户购买100元话费券已到账</span></van-swipe-item>
+                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang5.png" draggable="false"><span>176****7298 用户购买100元话费券已到账</span></van-swipe-item>
                             <van-swipe-item>
-                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang6.png" draggable="false"><span>151****1820 用户购买100元话费券已到账</span></van-swipe-item> 
+                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang6.png" draggable="false"><span>153****7820 用户购买100元话费券已到账</span></van-swipe-item> 
                             <van-swipe-item>
-                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang7.png" draggable="false"><span>138****3134 用户购买100元话费券已到账</span></van-swipe-item>
+                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang7.png" draggable="false"><span>138****9134 用户购买100元话费券已到账</span></van-swipe-item>
                             <van-swipe-item>
-                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang8.png" draggable="false"><span>132****4138 用户购买100元话费券已到账</span></van-swipe-item>                                                  
+                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang8.png" draggable="false"><span>133****2138 用户购买100元话费券已到账</span></van-swipe-item>                                                  
                         </van-swipe>
                     </van-notice-bar>
                     <van-notice-bar left-icon="volume-o" :scrollable="false" class="notice-bar-stop">
@@ -92,7 +92,7 @@
                 <div class="payRow" style="padding-top: 0px;">
                     <div class="pay_title">支付方式</div>
                     <div class="payType">
-                        <div class="payLeft"><img src="../../assets/weixin.png" alt="" class="payIcon">
+                        <div class="payLeft"><img src="../../assets/alipay.png" alt="" class="payIcon">
                             <div class="payName">微信</div>
                             <div class="payDesc">首单随机立减，最高至免单</div>
                         </div><img src="../../assets/checked.png" alt="" class="check">
@@ -304,10 +304,16 @@ export default {
                         sessionStorage.setItem("isShow", true);
                         sessionStorage.setItem("channel", form.form.channel);
                         console.log(result);
-                        isShow = sessionStorage.getItem("isShow");
+                        // isShow = sessionStorage.getItem("isShow");
                         sessionStorage.setItem('order_sn', result.data.data.order_sn);
                         // window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);//wx
-                        window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?pay_string=' + encodeURIComponent(result.data.data.payment);//alipay
+                        // window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?pay_string=' + encodeURIComponent(result.data.data.payment);//alipay直接支付
+                        window.location.href = "alipays://platformapi/startApp?appId=20000125&orderSuffix=" + encodeURIComponent(result.data.data.payment); //alipay跳转支付
+                        
+                        setTimeout(function(){
+                            location.reload();
+                        },6500);                        
+
                     }
 
 
