@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2023-07-25 21:05:10
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2024-05-04 20:15:15
+ * @LastEditTime: 2024-05-05 02:10:01
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -93,7 +93,7 @@
                     <div class="pay_title">支付方式</div>
                     <div class="payType">
                         <div class="payLeft"><img src="../../assets/alipay.png" alt="" class="payIcon">
-                            <div class="payName">微信</div>
+                            <div class="payName">支付宝</div>
                             <div class="payDesc">首单随机立减，最高至免单</div>
                         </div><img src="../../assets/checked.png" alt="" class="check">
                     </div>
