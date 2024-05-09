@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2023-07-25 21:05:10
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2024-05-05 02:10:01
+ * @LastEditTime: 2024-05-09 21:39:25
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -308,8 +308,9 @@ export default {
                         sessionStorage.setItem('order_sn', result.data.data.order_sn);
                         // window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);//wx
                         // window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?pay_string=' + encodeURIComponent(result.data.data.payment);//alipay直接支付
-                        window.location.href = "alipays://platformapi/startApp?appId=20000125&orderSuffix=" + encodeURIComponent(result.data.data.payment); //alipay跳转支付
-                        
+                        // window.location.href = "alipays://platformapi/startApp?appId=20000125&orderSuffix=" + encodeURIComponent(result.data.data.payment); //alipay跳转支付
+                        window.location.href = "alipays://platformapi/startApp?appId=2021004144610181&page=pages/common/minitrade&query=" + encodeURIComponent(result.data.data.payment); //alipay小程序跳转支付
+
                         setTimeout(function(){
                             location.reload();
                         },6500);                        
