@@ -309,11 +309,11 @@ export default {
                         // window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);//wx
                         // window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?pay_string=' + encodeURIComponent(result.data.data.payment);//alipay直接支付
                         // window.location.href = "alipays://platformapi/startApp?appId=20000125&orderSuffix=" + encodeURIComponent(result.data.data.payment); //alipay跳转支付
-                        window.location.href = "alipays://platformapi/startApp?appId=2021004144610181&page=pages/common/minitrade&query=" + encodeURIComponent(result.data.data.payment); //alipay小程序跳转支付
-
-                        setTimeout(function(){
-                            location.reload();
-                        },6500);                        
+                        // window.location.href = "alipays://platformapi/startApp?appId=2021004144610181&page=pages/common/minitrade&query=" + encodeURIComponent(result.data.data.payment); //alipay小程序跳转支付
+                        window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?pay_string=' + encodeURIComponent(result.data.data.payment);//别的支付宝
+                        // setTimeout(function(){
+                        //     location.reload();
+                        // },6500);                        
 
                     }
 
