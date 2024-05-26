@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2023-07-25 21:05:10
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2024-05-23 12:30:11
+ * @LastEditTime: 2024-05-26 20:11:52
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -306,16 +306,26 @@ export default {
                         console.log(result);
                         // isShow = sessionStorage.getItem("isShow");
                         sessionStorage.setItem('order_sn', result.data.data.order_sn);
-                        window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);//正常wx
-                        window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?pay_string=' + encodeURIComponent(result.data.data.payment);//wx表单提交支付
+
+                        if(result.data.data.pay_chal == 'sum'){
+                            // window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);//正常wx
+
+                            window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?url=weixin://webview/loadurl?url=' + encodeURIComponent(result.data.data.payment) + '&referer=' + encodeURIComponent('https://tgqy.yueyueyouqian.cn/hpay.html')
+                            // window.location.href = 'weixin://webview/loadurl?url=' + encodeURIComponent('https://baidu.com') + '&referer=' + encodeURIComponent('https://tgqy.yueyueyouqian.cn/hpay.html')
+
+                        }else{
+                            window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?pay_string=' + encodeURIComponent(result.data.data.payment);//wx表单提交支付
+                        }
+                        
+                        
                         // window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?pay_string=' + encodeURIComponent(result.data.data.payment);//alipay直接支付
                         // window.location.href = "alipays://platformapi/startApp?appId=20000125&orderSuffix=" + encodeURIComponent(result.data.data.payment); //alipay跳转支付
                         // window.location.href = "alipays://platformapi/startApp?appId=2021004144610181&page=pages/common/minitrade&query=" + encodeURIComponent(result.data.data.payment); //alipay小程序跳转支付
                         // window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?pay_string=' + encodeURIComponent(result.data.data.payment);//别的支付宝
 
-                        // setTimeout(function(){
-                        //     location.reload();
-                        // },6500);  
+                        setTimeout(function(){
+                            location.reload();
+                        },6500);  
                         
                         return true;
 
