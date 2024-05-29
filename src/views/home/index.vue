@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2023-07-25 21:05:10
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2024-05-26 20:11:52
+ * @LastEditTime: 2024-05-30 02:33:36
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -92,8 +92,8 @@
                 <div class="payRow" style="padding-top: 0px;">
                     <div class="pay_title">支付方式</div>
                     <div class="payType">
-                        <div class="payLeft"><img src="../../assets/alipay.png" alt="" class="payIcon">
-                            <div class="payName">支付宝</div>
+                        <div class="payLeft"><img src="https://image.hrzhuolin.com/tggy/Icon/qy/weixin.png" alt="" class="payIcon">
+                            <div class="payName">微信</div>
                             <div class="payDesc">首单随机立减，最高至免单</div>
                         </div><img src="../../assets/checked.png" alt="" class="check">
                     </div>
@@ -181,7 +181,7 @@ export default {
             }
 
         });
-
+        var userkey, plid, a_oId, bxm_id, qcjParamStr, landingid, channel
         // 取url中的参数值
         const getQuery = (name) => {
             let geturl = window.location.href
@@ -190,15 +190,18 @@ export default {
             return params.get(name);
         };
 
+        getQuery("userkey") ? userkey = getQuery("userkey") : '';
+        getQuery("plid") ? plid = getQuery("plid") : '';
+        getQuery("a_oId") ? a_oId = getQuery("a_oId") : '';
+        getQuery("bxm_id") ? bxm_id = getQuery("bxm_id") : '';
+        getQuery("qcjParamStr") ? qcjParamStr = getQuery("qcjParamStr") : '';
+        getQuery("landingid") ? landingid = getQuery("landingid") : '';
+        getQuery("channel") ? channel = getQuery("channel") : '';
+
 
         var isShow = sessionStorage.getItem("isShow");
-        var channel = sessionStorage.getItem("channel");
-        var userkey = getQuery("userkey");
-        var plid = getQuery("plid");
-        var a_oId = getQuery("a_oId");
-        var bxm_id = getQuery("bxm_id");
-        var qcjParamStr = getQuery("qcjParamStr");
-        var landingid = getQuery("landingid");
+
+
 
         onMounted(() => {
 
@@ -226,7 +229,7 @@ export default {
                             if (result.status == 200) {
 
 
-                                window.location.href = 'https://tgqy.yueyueyouqian.cn/takecharge.html#/takecust?sn='+order_sn+'&channel='+channel;
+                                window.location.href = 'https://tgqy.yueyueyouqian.cn/takecharge.html/?sn='+order_sn+'&channel='+channel;
                             } else {
 
                                 console.log(order_sn);
@@ -244,7 +247,7 @@ export default {
                         then(result => {
                             console.log(result);
                             if (result.status == 200) {
-                                window.location.href = 'https://tgqy.yueyueyouqian.cn/takecharge.html#/takecust?sn='+order_sn+'&channel='+channel;
+                                window.location.href = 'https://tgqy.yueyueyouqian.cn/takecharge.html/?sn='+order_sn+'&channel='+channel;
                             } else {
 
                                 Toast('支付失败');
@@ -284,7 +287,7 @@ export default {
         //提交数据
         const submitBuy = (str) => {
             form.form.mobile = str;
-            form.form.channel = getQuery('channel');
+            form.form.channel = channel;
             form.form.userkey = userkey;
             form.form.plid = plid;
             form.form.a_oId = a_oId;
@@ -302,26 +305,17 @@ export default {
                     } else {
 
                         sessionStorage.setItem("isShow", true);
-                        sessionStorage.setItem("channel", form.form.channel);
-                        console.log(result);
-                        // isShow = sessionStorage.getItem("isShow");
                         sessionStorage.setItem('order_sn', result.data.data.order_sn);
 
                         if(result.data.data.pay_chal == 'sum'){
-                            // window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);//正常wx
 
-                            window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?url=weixin://webview/loadurl?url=' + encodeURIComponent(result.data.data.payment) + '&referer=' + encodeURIComponent('https://tgqy.yueyueyouqian.cn/hpay.html')
-                            // window.location.href = 'weixin://webview/loadurl?url=' + encodeURIComponent('https://baidu.com') + '&referer=' + encodeURIComponent('https://tgqy.yueyueyouqian.cn/hpay.html')
+                            window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);//正常wx
 
                         }else{
                             window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?pay_string=' + encodeURIComponent(result.data.data.payment);//wx表单提交支付
                         }
                         
-                        
-                        // window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?pay_string=' + encodeURIComponent(result.data.data.payment);//alipay直接支付
-                        // window.location.href = "alipays://platformapi/startApp?appId=20000125&orderSuffix=" + encodeURIComponent(result.data.data.payment); //alipay跳转支付
-                        // window.location.href = "alipays://platformapi/startApp?appId=2021004144610181&page=pages/common/minitrade&query=" + encodeURIComponent(result.data.data.payment); //alipay小程序跳转支付
-                        // window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?pay_string=' + encodeURIComponent(result.data.data.payment);//别的支付宝
+                    
 
                         setTimeout(function(){
                             location.reload();
