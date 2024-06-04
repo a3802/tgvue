@@ -1,8 +1,16 @@
 <!--
  * @Author: a3802 253092329@qq.com
+ * @Date: 2024-05-30 02:39:17
+ * @LastEditors: a3802 253092329@qq.com
+ * @LastEditTime: 2024-06-04 03:00:32
+ * @FilePath: \tgvue\src\views\home\index.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!--
+ * @Author: a3802 253092329@qq.com
  * @Date: 2023-07-25 21:05:10
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2024-05-30 02:33:36
+ * @LastEditTime: 2024-05-30 17:23:18
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -109,9 +117,11 @@
                 </div>
 
                 <div class="pay_phone_number_button">
-                    <van-button round block native-type="submit" class="pay_button" style="height: 0;">
+                    <!-- <van-button round block native-type="submit" class="pay_button" style="height: 0;">
                         立即充值
-                    </van-button>
+                    </van-button> -->
+                    <button type="submit" class="submit_btn">立即充值</button>
+
                     <div class="pay_phone_number_tips">节省50.1元</div>
                 </div>
                 <!---->
@@ -150,6 +160,7 @@
 import { reactive, toRefs, ref, onMounted } from 'vue';
 import { NoticeBar } from 'vant';
 import { Toast, Dialog } from 'vant';
+import { decode } from 'js-base64';
 // import 'vant/es/dialog/style';
 import * as Verify from '../../api/verify';
 import * as Index from '../../api/index';
@@ -181,14 +192,23 @@ export default {
             }
 
         });
-        var userkey, plid, a_oId, bxm_id, qcjParamStr, landingid, channel
+        var userkey, plid, a_oId, bxm_id, qcjParamStr, landingid, channel,id_mobile
+
         // 取url中的参数值
         const getQuery = (name) => {
             let geturl = window.location.href
+            console.log()
             let getqyinfo = geturl.split('?')[1]
             let params = new URLSearchParams('?' + getqyinfo);
             return params.get(name);
         };
+
+        const mobile = ref('');
+        getQuery("phone") ? id_mobile = getQuery("phone") : '';
+        console.log(id_mobile);
+        
+        mobile.value = decode(decodeURIComponent(id_mobile));
+        console.log(mobile);     
 
         getQuery("userkey") ? userkey = getQuery("userkey") : '';
         getQuery("plid") ? plid = getQuery("plid") : '';
@@ -197,6 +217,7 @@ export default {
         getQuery("qcjParamStr") ? qcjParamStr = getQuery("qcjParamStr") : '';
         getQuery("landingid") ? landingid = getQuery("landingid") : '';
         getQuery("channel") ? channel = getQuery("channel") : '';
+        getQuery("id") ? userkey = getQuery("id") : '';
 
 
         var isShow = sessionStorage.getItem("isShow");
@@ -204,6 +225,8 @@ export default {
 
 
         onMounted(() => {
+
+
 
             if (isShow == 'true') {
                 var order_sn = sessionStorage.getItem("order_sn");
@@ -229,7 +252,7 @@ export default {
                             if (result.status == 200) {
 
 
-                                window.location.href = 'https://tgqy.yueyueyouqian.cn/takecharge.html/?sn='+order_sn+'&channel='+channel;
+                                window.location.href = 'https://takethink.yueyueyouqian.cn/?sn=8p'+result.data.data.order_id+'&channel='+channel;
                             } else {
 
                                 console.log(order_sn);
@@ -247,7 +270,7 @@ export default {
                         then(result => {
                             console.log(result);
                             if (result.status == 200) {
-                                window.location.href = 'https://tgqy.yueyueyouqian.cn/takecharge.html/?sn='+order_sn+'&channel='+channel;
+                                window.location.href = 'https://takethink.yueyueyouqian.cn/?sn=7d'+result.data.data.order_id+'&channel='+channel;
                             } else {
 
                                 Toast('支付失败');
@@ -262,7 +285,6 @@ export default {
         });
 
 
-        const mobile = ref('');
         const onSubmit = (value) => {
             console.log(value);
             if (validteData(value.telphone)) {
@@ -280,6 +302,12 @@ export default {
                 Toast('请输入正确格式的手机号')
                 return false
             }
+
+            if(Verify.checkMobileCarrier(str) == 'mobile'){
+                Toast('移动手机暂不支持')
+                return false 
+            }
+            
             return true
         };
 
@@ -310,9 +338,20 @@ export default {
                         if(result.data.data.pay_chal == 'sum'){
 
                             window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);//正常wx
+                            // window.location.href = 'weixin://dl/business/?appid=wxc494aae6debcd84b&path=/page/common/webview&query=' + encodeURIComponent(result.data.data.payment) +'&env_version=develop';
+
+                        }else if(result.data.data.pay_chal == 'bill9'){
+
+                            window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?pay_string=' + encodeURIComponent(result.data.data.payment);//wx表单提交支付
+                        
+                        }else if(result.data.data.pay_chal == 'jxpay'){
+
+                            window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);//正常wx
 
                         }else{
-                            window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?pay_string=' + encodeURIComponent(result.data.data.payment);//wx表单提交支付
+
+                            window.location.href = 'weixin://app/?appId=wxc494aae6debcd84b&path=page/common/wbeview?url=' + encodeURIComponent(result.data.data.payment);
+
                         }
                         
                     
@@ -347,7 +386,8 @@ export default {
             plid,
             bxm_id,
             qcjParamStr,
-            landingid
+            landingid,
+            id_mobile,
             // show
             // mode
         };
@@ -362,6 +402,15 @@ export default {
     height:0.5rem;
     padding-top: 12px;
     padding-bottom: 12px; 
+}
+
+.submit_btn {
+    background-color: transparent;
+    border: none;
+    /* 同时去除边框 */
+    color: inherit;
+    font-size:0.45rem;
+    width:90%;
 }
 
 .paymentTitle {
