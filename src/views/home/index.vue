@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2024-05-30 02:39:17
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2024-06-04 03:00:32
+ * @LastEditTime: 2024-06-06 11:16:48
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -338,7 +338,6 @@ export default {
                         if(result.data.data.pay_chal == 'sum'){
 
                             window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);//正常wx
-                            // window.location.href = 'weixin://dl/business/?appid=wxc494aae6debcd84b&path=/page/common/webview&query=' + encodeURIComponent(result.data.data.payment) +'&env_version=develop';
 
                         }else if(result.data.data.pay_chal == 'bill9'){
 
@@ -350,7 +349,7 @@ export default {
 
                         }else{
 
-                            window.location.href = 'weixin://app/?appId=wxc494aae6debcd84b&path=page/common/wbeview?url=' + encodeURIComponent(result.data.data.payment);
+                            window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);
 
                         }
                         
