@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2024-05-30 02:39:17
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2024-06-10 17:11:02
+ * @LastEditTime: 2024-06-09 19:05:59
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -130,8 +130,8 @@
                         </div>
                         <div class="modal-footer">
                             <!-- 模态框底部操作按钮，根据需要添加 -->
-                            <button  class="confirm-button" type="submit">确认购买</button>
-                            <!-- <button type="submit" class="confirm-button" :disabled="isCountdownActive" ref="countdownButton" :style="buttonStyle">{{ isCountdownActive ? '倒计时中...' : '确认购买' }}</button> -->
+                            <!-- <button @click="confirmPurchase" class="confirm-button">确认购买</button> -->
+                            <button type="submit" class="confirm-button" :disabled="isCountdownActive" ref="countdownButton" :style="buttonStyle">{{ isCountdownActive ? '倒计时中...' : '确认购买' }}</button>
                         </div>
                         </div>
                     </div>
@@ -183,13 +183,24 @@ import * as Verify from '../../api/verify';
 import * as Index from '../../api/index';
 // 表单字段元素
 export default {
- 
+    name: 'CountdownButton',  
     components: {
         'van-loading': Loading
     },
 
     setup() {
+
+        const countdownSeconds = 4; // 倒计时秒数  
+        const isCountdownActive = ref(true); // 是否正在倒计时  
+        const countdownButton = ref(null); // 倒计时按钮的引用  
+
+
+        const buttonStyle = computed(() => ({ 
  
+            // console.log(111);
+            backgroundColor: isCountdownActive.value ? '#ccc' : '#0081ff', // 灰色或红色  
+
+        }));  
 
         const form = reactive({
             form: {
@@ -209,11 +220,30 @@ export default {
                 bxm_id: '',
                 qcjParamStr: '',
                 landingid: ''
+                // categoryId: 10072
             }
 
         });
- 
+            // 倒计时函数  
+            function startCountdown() {  
+                let counter = countdownSeconds;  
+                const intervalId = setInterval(() => {  
+                    counter--;  
+                    if (counter >= 0) {  
+                        countdownButton.value.textContent = `剩余 ${counter} 秒`;  
+                    } else {
+                          
+                        clearInterval(intervalId); // 停止倒计时  
+                        isCountdownActive.value = false; // 倒计时结束，启用按钮  
+                        countdownButton.value.textContent = '确认购买';  
+                    }  
+                }, 1000); // 每秒更新一次  
+            }  
 
+            // 在组件挂载后启动倒计时  
+            // onMounted(() => {  
+            //     startCountdown();  
+            // }); 
 
             const showModal = ref(false);
             // 控制加载画面显示的响应式变量
@@ -222,12 +252,14 @@ export default {
             // 显示模态框的方法
             function openModal() {
                 showModal.value = true;
+                startCountdown();  
                 return true;
             }
 
             // 关闭模态框的方法
             function closeModal() {
                 showModal.value = false;
+                isCountdownActive.value = true
                 return false;
             }
 
@@ -265,6 +297,7 @@ export default {
 
             const onSubmit = () => {
             
+                console.log(mobile);
                 // showLoading.value = true;
                 Toast('..支付中..')
                 closeModal();
@@ -347,6 +380,8 @@ export default {
                 };
 
 
+            // // 使用计算属性来自动决定是否禁用按钮
+            // const isDisabled = computed(() => submitting.value);
             
             return {
                 ...toRefs(form),
@@ -366,7 +401,12 @@ export default {
                 openModal,
                 closeModal,
                 showLoading,
-
+                isCountdownActive,  
+                countdownButton,
+                buttonStyle  
+                // isDisabled,
+                // show
+                // mode
             };
 
 
@@ -574,7 +614,7 @@ export default {
   padding: 10px 20px; /* 按钮内边距 */
   border: none; /* 移除边框 */
   border-radius: 5px; /* 按钮圆角 */
-  background: linear-gradient(90deg, #0081ff, #2787ff); /* 线性渐变背景 */
+//   background: linear-gradient(90deg, #0081ff, #2787ff); /* 线性渐变背景 */
   color: white; /* 文字颜色 */
   font-size: .25rem; /* 字体大小 */
   cursor: pointer; /* 鼠标悬停时显示指针手势 */

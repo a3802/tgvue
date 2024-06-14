@@ -20,6 +20,17 @@
     top: -21px;
 }
 
+.saveMoney99_pay {
+    background: url("https://image.hrzhuolin.com/tggy/Icon/qy/bkimage_99.png") no-repeat top;
+    background-color: #0e60e0;
+    background-size: 100% 4rem;
+    /* background-image: linear-gradient(to right, blue, red); */
+    /* overflow: hidden */
+    height: 24rem;
+    position: absolute;
+    top: -21px;
+}
+
 .blind_box_pay_header {
     width: 100vw;
     font-size: 19px;

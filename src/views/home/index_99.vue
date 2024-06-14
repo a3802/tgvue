@@ -2,42 +2,40 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2024-05-30 02:39:17
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2024-06-10 17:11:02
+ * @LastEditTime: 2024-06-10 21:58:52
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
-    <div id="toTop" class="saveMoney_pay">
+    <div id="toTop" class="saveMoney99_pay">
         <div class="pay_phone_money">
             <!-- <van-form @submit="onSubmit"> -->
                 <van-cell-group>
                     <van-field v-model="mobile" type="number" name="telphone" placeholder="请输入手机号"
                         class="pay_phone_number" />
-                    <!-- <van-image width="0.34rem" height="0.38rem" :src="require('../../assets/contact.png')"
-                        class="change_phone_number" /> -->
                 </van-cell-group>
 
 
                 <div class="pay_phone_money_item type_title" style="font-weight: 600;">
-                    <div>&nbsp;待节省金额&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #fd2525;">50.1元</span></div>
+                    <div>&nbsp;待节省金额&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #fd2525;">100.1元</span></div>
                 </div>
                 <div class="pay_phone_money_price">
                     <div class="pay_phone_money_price_item">
                         <div class="orign_price">
-                            <p>20</p>
+                            <p>50</p>
                             <span>元</span> 
                         </div>
                     </div>
                     <div class="pay_phone_money_price_item type_active">
                         <div class="orign_price">
-                               <p>100</p>
+                               <p>200</p>
                                <span class="active_span">元</span> 
-                            <div class="price" style="margin-top: 0px;">实付49.9元</div>
+                            <div class="price" style="margin-top: 0px;">实付99.9元</div>
                         </div>
                     </div>
                     <div class="pay_phone_money_price_item">
                         <div class="orign_price">
-                            <p>50</p>
+                            <p>300</p>
                             <span>元</span> 
                         </div>
                     </div>
@@ -50,22 +48,22 @@
                             :show-indicators="false"
                         >
                             <van-swipe-item>
-                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang1.png" draggable="false"><span>158****4634 用户购买100元话费券已到账</span>
+                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang1.png" draggable="false"><span>158****4634 用户购买200元话费券已到账</span>
                             </van-swipe-item>
                             <van-swipe-item>
-                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang2.png" draggable="false"><span>183****8106 用户购买100元话费券已到账</span></van-swipe-item>
+                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang2.png" draggable="false"><span>183****8106 用户购买200元话费券已到账</span></van-swipe-item>
                             <van-swipe-item>
-                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang3.png" draggable="false"><span>159****0702 用户购买100元话费券已到账</span></van-swipe-item>
+                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang3.png" draggable="false"><span>159****0702 用户购买200元话费券已到账</span></van-swipe-item>
                             <van-swipe-item>
-                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang4.png" draggable="false"><span>151****2044 用户购买100元话费券已到账</span></van-swipe-item>
+                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang4.png" draggable="false"><span>151****2044 用户购买200元话费券已到账</span></van-swipe-item>
                             <van-swipe-item>
-                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang5.png" draggable="false"><span>176****7298 用户购买100元话费券已到账</span></van-swipe-item>
+                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang5.png" draggable="false"><span>176****7298 用户购买200元话费券已到账</span></van-swipe-item>
                             <van-swipe-item>
-                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang6.png" draggable="false"><span>153****7820 用户购买100元话费券已到账</span></van-swipe-item> 
+                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang6.png" draggable="false"><span>153****7820 用户购买200元话费券已到账</span></van-swipe-item> 
                             <van-swipe-item>
-                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang7.png" draggable="false"><span>138****9134 用户购买100元话费券已到账</span></van-swipe-item>
+                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang7.png" draggable="false"><span>138****9134 用户购买200元话费券已到账</span></van-swipe-item>
                             <van-swipe-item>
-                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang8.png" draggable="false"><span>133****2138 用户购买100元话费券已到账</span></van-swipe-item>                                                  
+                                <img src="https://image.hrzhuolin.com/tggy/Icon/qy/touixang8.png" draggable="false"><span>133****2138 用户购买200元话费券已到账</span></van-swipe-item>                                                  
                         </van-swipe>
                     </van-notice-bar>
                     <van-notice-bar left-icon="volume-o" :scrollable="false" class="notice-bar-stop">
@@ -93,11 +91,11 @@
 
                 <div class="checkboxItem">
                     <div class="paymentTitle"><span>实际支付金额:</span></div>
-                    <div class="checkboxItemLeft"><span class="paymentTitle" style="color: rgb(38, 131, 255); font-weight:700;">49.9</span><span class="paymentDetails">元</span></div>
+                    <div class="checkboxItemLeft"><span class="paymentTitle" style="color: rgb(38, 131, 255); font-weight:700;">99.9</span><span class="paymentDetails">元</span></div>
                 </div>
                 <div class="checkboxItem">
                     <div class="paymentTitle"><span>实际到账话费卷:</span></div>
-                    <div class="checkboxItemLeft"><span class="paymentTitle" style="color: rgb(38, 131, 255); font-weight:700;">100</span><span class="paymentDetails">元</span></div>
+                    <div class="checkboxItemLeft"><span class="paymentTitle" style="color: rgb(38, 131, 255); font-weight:700;">200</span><span class="paymentDetails">元</span></div>
                 </div>
 
                 <div class="pay_phone_number_button">
@@ -107,7 +105,7 @@
                     <!-- <button type="submit" class="submit_btn">立即充值</button> -->
                     <div class="submit_btn"  @click="openModal">立即充值</div>
 
-                    <div class="pay_phone_number_tips">节省50.1元</div>
+                    <div class="pay_phone_number_tips">节省100.1元</div>
                 </div>
                 <!---->
 
@@ -142,7 +140,7 @@
         </div>
         <div class="rightInfo">
             <!-- <a href="/cqy6/qy_refund?cid=0">极速退款</a> -->
-            <router-link to="/rule" class="nav-item" active-class="nav-color">
+            <router-link to="/rule99" class="nav-item" active-class="nav-color">
                 规则
             </router-link>
             <a href="https://tb.53kf.com/code/client/818133c55cba154d3d56d99366e4b4475/1">客服</a>
@@ -151,11 +149,11 @@
         <div class="model2">
             <div class="model2-title">话费优惠券券包说明</div>
             <div class="tips">
-                <p>1.100元话费每个月可领取10元话费,需要在每个周期(默认为月)进行手动兑换,举例:在1月5号购买成功,1月5日至2月4日为第一个兑换间期,2月5日至3月4日为第二个领取周期,以此类推;</p>
+                <p>1.200元话费每个月可领取20元话费,需要在每个周期(默认为月)进行手动兑换,举例:在1月5号购买成功,1月5日至2月4日为第一个兑换间期,2月5日至3月4日为第二个领取周期,以此类推;</p>
                 <p>2.每个周期内可随时兑换话费,若某周期未兑换,则视为主动放弃该次领取资格,后续不做补发;</p>
                 <p>3.兑换话费时需输入抢购时的手机号,即可充值到账(一般1~10分钟内充值成功);</p>
                 <p>4.注:部分携号转网号码可能导致充值不成功!</p>
-                <p>5.用户下载"口袋折扣APP"可根据注册手机号,领取100元话费券包,其中包括10张5块话费立减券(有效期1年)和5张10块话费立减券</p>
+                <p>5.用户下载"口袋折扣APP"可根据注册手机号,领取200元话费券包,其中包括20张5块话费立减券(有效期1年)和10张10块话费立减券</p>
                 <p>6.本公司拥有对上述条款做最终解释的权利:</p>
             </div>
             <!---->
@@ -180,7 +178,7 @@ import { Toast, Loading  } from 'vant';
 import { decode } from 'js-base64';
 // import 'vant/es/dialog/style';
 import * as Verify from '../../api/verify';
-import * as Index from '../../api/index';
+import * as Index from '../../api/index_99';
 // 表单字段元素
 export default {
  
@@ -196,7 +194,7 @@ export default {
                 mobile: '',
                 isParty: false,
                 partyData: {},
-                productId: 310072,
+                productId: 310073,
                 payType: 20,
                 couponId: 0,
                 coupon_money: 0,
