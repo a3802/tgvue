@@ -2,7 +2,7 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2024-05-30 02:39:17
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2024-06-10 17:11:02
+ * @LastEditTime: 2024-06-16 00:53:38
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -142,21 +142,40 @@
         </div>
         <div class="rightInfo">
             <!-- <a href="/cqy6/qy_refund?cid=0">极速退款</a> -->
-            <router-link to="/rule" class="nav-item" active-class="nav-color">
+            <!-- <router-link to="/rule" class="nav-item" active-class="nav-color">
                 规则
-            </router-link>
-            <a href="https://tb.53kf.com/code/client/818133c55cba154d3d56d99366e4b4475/1">客服</a>
+            </router-link> -->
+            <a id="53kfbtn" href="https://tb.53kf.com/code/client/818133c55cba154d3d56d99366e4b4475/1">在线客服</a>
             <!-- <a href="https://kefu.xianshangzixun.com/web/im?cptid=d4645200bee7">客服</a> -->
         </div>
         <div class="model2">
-            <div class="model2-title">话费优惠券券包说明</div>
+            <div class="model2-title">话费券包说明</div>
             <div class="tips">
-                <p>1.100元话费每个月可领取10元话费,需要在每个周期(默认为月)进行手动兑换,举例:在1月5号购买成功,1月5日至2月4日为第一个兑换间期,2月5日至3月4日为第二个领取周期,以此类推;</p>
-                <p>2.每个周期内可随时兑换话费,若某周期未兑换,则视为主动放弃该次领取资格,后续不做补发;</p>
-                <p>3.兑换话费时需输入抢购时的手机号,即可充值到账(一般1~10分钟内充值成功);</p>
-                <p>4.注:部分携号转网号码可能导致充值不成功!</p>
-                <p>5.用户下载"口袋折扣APP"可根据注册手机号,领取100元话费券包,其中包括10张5块话费立减券(有效期1年)和5张10块话费立减券</p>
-                <p>6.本公司拥有对上述条款做最终解释的权利:</p>
+                <p>&nbsp;一.100元话费每个月可领取10元话费,需要在每个周期(默认为月)进行兑换,举例:在1月5号购买成功,1月5日至2月4日为第一个兑换间期,2月5日至3月4日为第二个领取周期,以此类推;</p>
+                <p>&nbsp;  领取方式1：办理成功时会收到充值短信,通过短信链接即可充值介意者请慎购！</p>
+                <p>&nbsp;  领取方式2：关注【悦众科技服务】微信公众号,根据提示兑换充值介意者请慎购！</p>
+                <p>&nbsp;二.每个周期内可随时兑换话费,若某周期未兑换,则视为主动放弃该次领取资格,后续不做补发;</p>
+                <p>&nbsp;三.兑换话费时需输入抢购时的手机号,即可充值到账(一般1~10分钟内充值成功);</p>
+                <p>&nbsp;四.注:部分携号转网号码可能导致充值不成功!</p>
+                <p>&nbsp;五.北京悦众科技有限公司拥有对上述条款做最终解释的权利 客服电话:01013600346</p>
+            </div>
+        </div>
+                    <!-- <van-image width="0.34rem" height="0.38rem" :src="require('../../assets/contact.png')"
+                        class="change_phone_number" /> -->
+        <div class="model2">
+            <div class="model2-title">话费券包</div>
+            <div class="tips">
+                <van-image src='https://image.hrzhuolin.com/tggy/Icon/qy/bg1.png'/>
+                <van-image src='https://image.hrzhuolin.com/tggy/Icon/qy/bg2.png'/>
+                <van-image src='https://image.hrzhuolin.com/tggy/Icon/qy/bg3.png'/>
+                <van-image src='https://image.hrzhuolin.com/tggy/Icon/qy/bg4.png'/>
+                <van-image src='https://image.hrzhuolin.com/tggy/Icon/qy/bg5.png'/>
+                <van-image src='https://image.hrzhuolin.com/tggy/Icon/qy/bg6.png'/>
+                <van-image src='https://image.hrzhuolin.com/tggy/Icon/qy/bg7.png'/>
+                <van-image src='https://image.hrzhuolin.com/tggy/Icon/qy/bg8.png'/>
+                <van-image src='https://image.hrzhuolin.com/tggy/Icon/qy/bg9.png'/>
+                <van-image src='https://image.hrzhuolin.com/tggy/Icon/qy/bg10.png'/>
+                
             </div>
             <!---->
         </div>
@@ -511,7 +530,6 @@ export default {
 
 
 
-
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -586,6 +604,27 @@ export default {
 .confirm-button:hover {
   background: linear-gradient(90deg, #0050b3, #0050b3); /* 鼠标悬浮时的渐变背景 */
 }
+
+.tips {
+    width: 100%;
+    border-radius: 2em;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    box-sizing: border-box;
+    background: #fff;
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+    font-size: 0.31rem;
+}
+
+.tips  p {
+    margin: 0.1rem 0;
+    padding: 0;
+
+}
+
 
 </style>
 <style>

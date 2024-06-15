@@ -10,23 +10,25 @@
 }
 
 .saveMoney_pay {
-    background: url("https://image.hrzhuolin.com/tggy/Icon/qy/bkimage.png") no-repeat top;
+    background: url("https://image.hrzhuolin.com/tggy/Icon/qy/testbg.png") no-repeat top;
+    /* background: url("../testbg.png") no-repeat top; */
     background-color: #0e60e0;
-    background-size: 100% 4rem;
+    background-size: 100% 6rem;
     /* background-image: linear-gradient(to right, blue, red); */
     /* overflow: hidden */
-    height: 24rem;
+    height: 47rem;
     position: absolute;
     top: -21px;
 }
 
 .saveMoney99_pay {
-    background: url("https://image.hrzhuolin.com/tggy/Icon/qy/bkimage_99.png") no-repeat top;
+    background: url("https://image.hrzhuolin.com/tggy/Icon/qy/testbg99.png") no-repeat top;
+    /* background: url("../testbg99.png") no-repeat top; */
     background-color: #0e60e0;
-    background-size: 100% 4rem;
+    background-size: 100% 6rem;
     /* background-image: linear-gradient(to right, blue, red); */
     /* overflow: hidden */
-    height: 24rem;
+    height: 47rem;
     position: absolute;
     top: -21px;
 }
@@ -98,8 +100,8 @@
 
 .pay_phone_money {
     position: relative;
-    top: 3.5rem;
-    margin: .2rem .16rem 0;
+    top: 3.19rem;
+    margin: .3rem .16rem 0;
     background: #fff;
     border-radius: .2rem;
     padding: .2rem .28rem
@@ -304,7 +306,8 @@
     top: .2rem
 }
 
-.rightInfo a {
+
+/* .rightInfo a {
     background: rgba(0, 0, 0, .5);
     border-radius: 5vw 0 0 5vw;
     height: .5rem;
@@ -316,6 +319,25 @@
     min-width: .84rem;
     display: block;
     margin-top: .4rem
+} */
+
+.rightInfo a {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background: #ea4d3e;
+    font-size: .3em;
+    color: #fff;
+    position: fixed;
+    opacity: .9;
+    right: 0;
+    width: 1em;
+    top: 14vh;
+    z-index: 80;
+    padding: 8px 4px;
+    border-top-left-radius: 0.6em;
+    border-bottom-left-radius: 0.6em;
 }
 
 .payRow {
@@ -396,15 +418,15 @@
 
 .model2 {
     position: relative;
-    margin: 0 .2rem;
+    margin: 0 .2rem .2rem .2rem;
     background: #fff;
     border-radius: .2rem;
     padding: .3rem .18rem .44rem;
-    top: 3.7rem;
+    top: 3.4rem;
 }
 
 .model2-title {
-    font-size: .3rem;
+    font-size: .5rem;
     text-align: center;
     font-weight: 700;
     color: #000
