@@ -2,14 +2,14 @@
  * @Author: a3802 253092329@qq.com
  * @Date: 2024-05-30 02:39:17
  * @LastEditors: a3802 253092329@qq.com
- * @LastEditTime: 2024-06-16 00:53:38
+ * @LastEditTime: 2024-06-26 15:40:01
  * @FilePath: \tgvue\src\views\home\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
     <div id="toTop" class="saveMoney_pay">
         <div class="pay_phone_money">
-            <!-- <van-form @submit="onSubmit"> -->
+            <van-form @submit="onSubmit">
                 <van-cell-group>
                     <van-field v-model="mobile" type="number" name="telphone" placeholder="请输入手机号"
                         class="pay_phone_number" />
@@ -84,8 +84,8 @@
                 <div class="payRow" style="padding-top: 0px;">
                     <div class="pay_title">支付方式</div>
                     <div class="payType">
-                        <div class="payLeft"><img src="https://image.hrzhuolin.com/tggy/Icon/qy/weixin.png" alt="" class="payIcon">
-                            <div class="payName">微信</div>
+                        <div class="payLeft"><img src="https://image.hrzhuolin.com/tggy/Icon/qy/wxal.png" alt="" class="payIcon">
+                            <div class="payName">微信/支付宝</div>
                             <div class="payDesc">首单随机立减，最高至免单</div>
                         </div><img src="../../assets/checked.png" alt="" class="check">
                     </div>
@@ -104,15 +104,15 @@
                     <!-- <van-button round block native-type="submit" class="pay_button" style="height: 0;">
                         立即充值
                     </van-button> -->
-                    <!-- <button type="submit" class="submit_btn">立即充值</button> -->
-                    <div class="submit_btn"  @click="openModal">立即充值</div>
+                    <button type="submit" class="submit_btn">立即充值</button>
+                    <!-- <div class="submit_btn"  @click="openModal">立即充值</div> -->
 
                     <div class="pay_phone_number_tips">节省50.1元</div>
                 </div>
                 <!---->
 
                 <teleport to="body">
-                    <van-form @submit="onSubmit">
+                    <!-- <van-form @submit="onSubmit"> -->
                     <div
                         v-if="showModal"
                         class="modal-overlay"
@@ -135,10 +135,10 @@
                         </div>
                         </div>
                     </div>
-                    </van-form>
+                    <!-- </van-form> -->
                 </teleport> 
 
-            <!-- </van-form> -->
+            </van-form>
         </div>
         <div class="rightInfo">
             <!-- <a href="/cqy6/qy_refund?cid=0">极速退款</a> -->
@@ -263,7 +263,7 @@ export default {
         };
 
         const mobile = ref('');
-        // const submitting = ref(false);
+        const submitting = ref(false);
  
         if(getQuery("phone")){
             mobile.value = decode(decodeURIComponent(getQuery("phone")));
@@ -283,13 +283,18 @@ export default {
 
 
             const onSubmit = () => {
-            
+                if (submitting.value) return; // 如果正在提交，则不执行
+                submitting.value = true; // 标记为正在提交
                 // showLoading.value = true;
-                Toast('..支付中..')
-                closeModal();
+                Toast('..正在申请,请等待..')
+                // closeModal();
                 if (validteData(mobile.value)) {
                     submitBuy(mobile.value);                       
                 }
+
+                setTimeout(() => {
+                    submitting.value = false;
+                }, 2500); 
 
             };
 
@@ -339,7 +344,7 @@ export default {
 
                                 sessionStorage.setItem('order_sn', result.data.data.order_sn);
 
-                                if(result.data.data.pay_chal == 'sum' || result.data.data.pay_chal == 'jxpay' || result.data.data.pay_chal == 'heepay' ){
+                                if(result.data.data.pay_chal == 'sum' || result.data.data.pay_chal == 'jxpay' || result.data.data.pay_chal == 'heepay' || result.data.data.pay_chal == 'wechat_ori' ){
 
                                     window.location.href = 'https://tgqy.yueyueyouqian.cn/hpay.html?url=' + encodeURIComponent(result.data.data.payment);//正常wx
 

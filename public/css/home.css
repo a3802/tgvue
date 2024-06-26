@@ -10,27 +10,27 @@
 }
 
 .saveMoney_pay {
-    background: url("https://image.hrzhuolin.com/tggy/Icon/qy/testbg.png") no-repeat top;
-    /* background: url("../testbg.png") no-repeat top; */
+    background: url("https://image.hrzhuolin.com/tggy/Icon/qy/bkimage.png") no-repeat top;
+    /* background: url("../testbg3.png") no-repeat top; */
     background-color: #0e60e0;
-    background-size: 100% 6rem;
+    background-size: 100% 4.5rem;
     /* background-image: linear-gradient(to right, blue, red); */
     /* overflow: hidden */
     height: 47rem;
     position: absolute;
-    top: -21px;
+    top: -65px;
 }
 
 .saveMoney99_pay {
-    background: url("https://image.hrzhuolin.com/tggy/Icon/qy/testbg99.png") no-repeat top;
-    /* background: url("../testbg99.png") no-repeat top; */
+    background: url("https://image.hrzhuolin.com/tggy/Icon/qy/bkimage_99.png") no-repeat top;
+    /* background: url("../testbg991.png") no-repeat top; */
     background-color: #0e60e0;
-    background-size: 100% 6rem;
+    background-size: 100% 4.5rem;
     /* background-image: linear-gradient(to right, blue, red); */
     /* overflow: hidden */
     height: 47rem;
     position: absolute;
-    top: -21px;
+    top: -65px;
 }
 
 .blind_box_pay_header {
@@ -100,7 +100,7 @@
 
 .pay_phone_money {
     position: relative;
-    top: 3.19rem;
+    top: 3.8rem;
     margin: .3rem .16rem 0;
     background: #fff;
     border-radius: .2rem;
@@ -422,7 +422,7 @@
     background: #fff;
     border-radius: .2rem;
     padding: .3rem .18rem .44rem;
-    top: 3.4rem;
+    top: 4rem;
 }
 
 .model2-title {
